@@ -4,7 +4,7 @@ export default function Labs() {
   return (
     <div id="wd-labs">
       <h1>Labs</h1>
-      <h2>Your Full Name - Section XX</h2>
+      <h2>Akash Shridhar Shetty - CS5610X</h2>
 
       <h3>Lab Assignments</h3>
       <ul>
