@@ -28,8 +28,8 @@ export default function Dashboard() {
         </div>
         <div className="wd-dashboard-course">
           <Link href="/Courses/5678" className="wd-dashboard-course-link">
-            <Image
-              src="/images/reactjs.jpg"
+            <Image 
+              src="/images/nextjs.jpg"
               width={200}
               height={150}
               alt="Course"
@@ -44,7 +44,7 @@ export default function Dashboard() {
         <div className="wd-dashboard-course">
           <Link href="/Courses/9012" className="wd-dashboard-course-link">
             <Image
-              src="/images/reactjs.jpg"
+              src="/images/database.jpg"
               width={200}
               height={150}
               alt="Course"
@@ -59,7 +59,7 @@ export default function Dashboard() {
         <div className="wd-dashboard-course">
           <Link href="/Courses/3456" className="wd-dashboard-course-link">
             <Image
-              src="/images/reactjs.jpg"
+              src="/images/node-js.jpg"
               width={200}
               height={150}
               alt="Course"
@@ -74,7 +74,7 @@ export default function Dashboard() {
         <div className="wd-dashboard-course">
           <Link href="/Courses/7890" className="wd-dashboard-course-link">
             <Image
-              src="/images/reactjs.jpg"
+              src="/images/python.jpg"
               width={200}
               height={150}
               alt="Course"
@@ -89,7 +89,7 @@ export default function Dashboard() {
         <div className="wd-dashboard-course">
           <Link href="/Courses/2345" className="wd-dashboard-course-link">
             <Image
-              src="/images/reactjs.jpg"
+              src="/images/javascript.jpg"
               width={200}
               height={150}
               alt="Course"
@@ -104,7 +104,7 @@ export default function Dashboard() {
         <div className="wd-dashboard-course">
           <Link href="/Courses/6789" className="wd-dashboard-course-link">
             <Image
-              src="/images/reactjs.jpg"
+              src="/images/azure.jpg"
               width={200}
               height={150}
               alt="Course"
