@@ -25,7 +25,7 @@ export default function Labs() {
           <Link href="/">Go to Kambaz</Link>
         </li>
         <li>
-          <a href="https://your-app-name.vercel.app" target="_blank">
+          <a href="https://kambaz-next-js-fawn.vercel.app" target="_blank">
             Kambaz on Vercel (Deployed)
           </a>
         </li>
