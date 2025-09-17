@@ -165,10 +165,16 @@ export default function Lab1() {
           id="wd-starship"
           width="400px"
           src="https://www.staradvertiser.com/wp-content/uploads/2021/08/web1_Starship-gap2.jpg"
+          alt="Starship"
         />
         <br />
         Loading a local image: <br />
-        <img id="wd-teslabot" src="/images/teslabot.jpg" height="200px" />
+        <img
+          id="wd-teslabot"
+          src="/images/teslabot.jpg"
+          height="200px"
+          alt="Teslabot"
+        />
       </div>
       <div id="wd-forms">
         <h4>Form Elements</h4>
@@ -307,7 +313,7 @@ export default function Lab1() {
       to get dummy text
       <br />
       <a
-        href="https://github.com/yourusername/kambaz-next-js"
+        href="https://github.com/akashshetty1997/kambaz-next-js"
         id="wd-github"
         target="_blank"
       >

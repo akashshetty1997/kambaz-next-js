@@ -1,39 +1,45 @@
-export default function LabsLanding() {
-  return (
-    <div id="wd-labs-landing">
-      <h1>Labs</h1>
-      <p>
-        <b>Name:</b> Akash Shridhar Shetty
-      </p>
-      <p>
-        <b>Section:</b> 
-      </p>
+import Link from "next/link";
 
+export default function Labs() {
+  return (
+    <div id="wd-labs">
+      <h1>Labs</h1>
+      <h2>Your Full Name - Section XX</h2>
+
+      <h3>Lab Assignments</h3>
       <ul>
         <li>
-          <a href="/Labs/Lab1">Lab 1 – HTML & Forms</a>
+          <Link href="/Labs/Lab1">Lab 1 - HTML</Link>
         </li>
         <li>
-          <a href="/Labs/Lab2">Lab 2 – CSS Basics (stub)</a>
+          <Link href="/Labs/Lab2">Lab 2 - CSS</Link>
         </li>
         <li>
-          <a href="/Labs/Lab3">Lab 3 – JavaScript (stub)</a>
+          <Link href="/Labs/Lab3">Lab 3 - JavaScript</Link>
         </li>
       </ul>
 
-      <p>
-        <a href="/">Kambaz application</a>
-      </p>
+      <h3>Kambaz Application</h3>
+      <ul>
+        <li>
+          <Link href="/">Go to Kambaz</Link>
+        </li>
+        <li>
+          <a href="https://your-app-name.vercel.app" target="_blank">
+            Kambaz on Vercel (Deployed)
+          </a>
+        </li>
+      </ul>
 
-      <h3>Source Code</h3>
+      <h3>Source Code Repository</h3>
       <ul>
         <li>
           <a
-            id="wd-github"
             href="https://github.com/akashshetty1997/kambaz-next-js"
+            id="wd-github"
             target="_blank"
           >
-            kambaz-next-js (GitHub)
+            GitHub Repository
           </a>
         </li>
       </ul>

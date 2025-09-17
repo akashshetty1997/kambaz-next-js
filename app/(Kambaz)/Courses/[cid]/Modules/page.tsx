@@ -1,21 +1,36 @@
-export default function Modules({ params }: any) {
+export default function Modules() {
   return (
-    <div id="wd-modules">
-      <h2>Modules</h2>
-      <div className="wd-module">
-        <h4>Module 1</h4>
-        <ul>
-          <li>Lesson 1</li>
-          <li>Lesson 2</li>
-        </ul>
-      </div>
-      <div className="wd-module">
-        <h4>Module 2</h4>
-        <ul>
-          <li>Lesson A</li>
-          <li>Lesson B</li>
-        </ul>
-      </div>
+    <div>
+      <ul id="wd-modules">
+        <li className="wd-module">
+          <div className="wd-title">Week 1</div>
+          <ul className="wd-lessons">
+            <li className="wd-lesson">
+              <span className="wd-title">LEARNING OBJECTIVES</span>
+              <ul className="wd-content">
+                <li className="wd-content-item">Introduction to the course</li>
+                <li className="wd-content-item">
+                  Learn what is Web Development
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li className="wd-module">
+          <div className="wd-title">Week 2</div>
+          <ul className="wd-lessons">
+            <li className="wd-lesson">
+              <span className="wd-title">LESSON 1</span>
+            </li>
+            <li className="wd-lesson">
+              <span className="wd-title">LESSON 2</span>
+            </li>
+          </ul>
+        </li>
+        <li className="wd-module">
+          <div className="wd-title">Week 3</div>
+        </li>
+      </ul>
     </div>
   );
 }

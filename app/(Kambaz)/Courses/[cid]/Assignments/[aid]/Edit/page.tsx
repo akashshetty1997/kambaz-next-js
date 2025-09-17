@@ -1,104 +1,126 @@
-export default function AssignmentEditor({ params }: any) {
+export default function AssignmentEditor() {
   return (
-    <div id="wd-assignment-editor">
-      <h2>Assignment Editor</h2>
-      <label>Assignment Name</label>
-      <br />
-      <input id="wd-assignment-name" defaultValue="A1 — HTML & Forms" />
+    <div id="wd-assignments-editor">
+      <label htmlFor="wd-name">Assignment Name</label>
+      <input id="wd-name" defaultValue="A1 - ENV + HTML" />
       <br />
       <br />
 
-      <label>Description</label>
-      <br />
       <textarea
-        id="wd-assignment-description"
-        rows={4}
-        cols={50}
-        defaultValue="Build Lab1 & Kambaz prototype pages per Chapter 1."
+        id="wd-description"
+        defaultValue="The assignment is available online Submit a link to the landing page of your Web application running on Vercel."
       />
       <br />
-      <br />
 
-      <label>Points</label>
-      <br />
-      <input id="wd-assignment-points" type="number" defaultValue={100} />
-      <br />
-      <br />
-
-      <label>Assignment Group</label>
-      <br />
-      <select id="wd-assignment-group" defaultValue="ASSIGNMENTS">
-        <option value="ASSIGNMENTS">Assignments</option>
-        <option value="QUIZZES">Quizzes</option>
-        <option value="EXAMS">Exams</option>
-        <option value="PROJECT">Project</option>
-      </select>
-      <br />
-      <br />
-
-      <label>Display Grade</label>
-      <br />
-      <select id="wd-assignment-display-grade" defaultValue="PERCENTAGE">
-        <option value="PERCENTAGE">Percentage</option>
-        <option value="POINTS">Points</option>
-        <option value="COMPLETE">Complete/Incomplete</option>
-      </select>
-      <br />
-      <br />
-
-      <label>Submission Type</label>
-      <br />
-      <select id="wd-assignment-submission-type" defaultValue="ONLINE">
-        <option value="ONLINE">Online</option>
-        <option value="ON_PAPER">On Paper</option>
-        <option value="EXTERNAL_TOOL">External Tool</option>
-      </select>
-      <br />
-      <br />
-
-      <fieldset>
-        <legend>Online Entry Options</legend>
-        <label>
-          <input type="checkbox" defaultChecked /> Text Entry
-        </label>
-        <br />
-        <label>
-          <input type="checkbox" /> Website URL
-        </label>
-        <br />
-        <label>
-          <input type="checkbox" /> Media Recordings
-        </label>
-        <br />
-        <label>
-          <input type="checkbox" /> File Uploads
-        </label>
-      </fieldset>
-      <br />
-
-      <label>Assign to</label>
-      <br />
-      <input id="wd-assign-to" defaultValue="Everyone" />
-      <br />
-      <br />
-
-      <label>Due</label>
-      <br />
-      <input id="wd-due-date" type="date" defaultValue="2025-09-24" />
-      <br />
-      <br />
-
-      <label>Available from</label>
-      <br />
-      <input id="wd-available-from" type="date" defaultValue="2025-09-10" />
-      <br />
-      <br />
-
-      <label>Until</label>
-      <br />
-      <input id="wd-available-until" type="date" defaultValue="2025-10-01" />
-      <br />
-      <br />
+      <table>
+        <tbody>
+          <tr>
+            <td align="right" valign="top">
+              <label htmlFor="wd-points">Points</label>
+            </td>
+            <td>
+              <input id="wd-points" type="number" defaultValue={100} />
+            </td>
+          </tr>
+          <tr>
+            <td align="right" valign="top">
+              <label htmlFor="wd-group">Assignment Group</label>
+            </td>
+            <td>
+              <select id="wd-group">
+                <option>ASSIGNMENTS</option>
+                <option>QUIZZES</option>
+                <option>EXAMS</option>
+                <option>PROJECT</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td align="right" valign="top">
+              <label htmlFor="wd-display-grade-as">Display Grade as</label>
+            </td>
+            <td>
+              <select id="wd-display-grade-as">
+                <option>Percentage</option>
+                <option>Points</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td align="right" valign="top">
+              <label htmlFor="wd-submission-type">Submission Type</label>
+            </td>
+            <td>
+              <select id="wd-submission-type">
+                <option>Online</option>
+                <option>On Paper</option>
+                <option>External Tool</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td align="right" valign="top">
+              Online Entry Options
+            </td>
+            <td>
+              <input type="checkbox" id="wd-text-entry" defaultChecked />
+              <label htmlFor="wd-text-entry">Text Entry</label>
+              <br />
+              <input type="checkbox" id="wd-website-url" />
+              <label htmlFor="wd-website-url">Website URL</label>
+              <br />
+              <input type="checkbox" id="wd-media-recordings" />
+              <label htmlFor="wd-media-recordings">Media Recordings</label>
+              <br />
+              <input type="checkbox" id="wd-student-annotation" />
+              <label htmlFor="wd-student-annotation">Student Annotation</label>
+              <br />
+              <input type="checkbox" id="wd-file-upload" />
+              <label htmlFor="wd-file-upload">File Uploads</label>
+            </td>
+          </tr>
+          <tr>
+            <td align="right" valign="top">
+              <label htmlFor="wd-assign-to">Assign to</label>
+            </td>
+            <td>
+              <input id="wd-assign-to" defaultValue="Everyone" />
+            </td>
+          </tr>
+          <tr>
+            <td align="right" valign="top">
+              <label htmlFor="wd-due-date">Due</label>
+            </td>
+            <td>
+              <input id="wd-due-date" type="date" defaultValue="2024-05-13" />
+            </td>
+          </tr>
+          <tr>
+            <td align="right" valign="top">
+              <label htmlFor="wd-available-from">Available from</label>
+            </td>
+            <td>
+              <input
+                id="wd-available-from"
+                type="date"
+                defaultValue="2024-05-06"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td align="right" valign="top">
+              <label htmlFor="wd-available-until">Until</label>
+            </td>
+            <td>
+              <input
+                id="wd-available-until"
+                type="date"
+                defaultValue="2024-05-20"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 }
