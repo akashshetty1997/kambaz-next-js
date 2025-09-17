@@ -1,10 +1,7 @@
-import PeopleTable from "./Table";
-
-export default function People() {
+export default function Grades() {
   return (
-    <div>
+    <div id="wd-grades">
       <h2>People</h2>
-      <PeopleTable />
     </div>
   );
 }

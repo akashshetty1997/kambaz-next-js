@@ -1,6 +1,5 @@
 import Modules from "../Modules/page";
 import CourseStatus from "./Status";
-
 export default function Home() {
   return (
     <div id="wd-home">
@@ -8,10 +7,12 @@ export default function Home() {
         <tbody>
           <tr>
             <td valign="top" width="70%">
-              <Modules />
+              {" "}
+              <Modules />{" "}
             </td>
             <td valign="top">
-              <CourseStatus />
+              {" "}
+              <CourseStatus />{" "}
             </td>
           </tr>
         </tbody>

@@ -1,46 +1,28 @@
 import Link from "next/link";
-
 export default function Labs() {
   return (
     <div id="wd-labs">
       <h1>Labs</h1>
-      <h2>Akash Shridhar Shetty - CS5610X</h2>
-
-      <h3>Lab Assignments</h3>
       <ul>
         <li>
-          <Link href="/Labs/Lab1">Lab 1 - HTML</Link>
+          <Link href="/Labs/Lab1" id="wd-lab1-link">
+            Lab 1: HTML Examples{" "}
+          </Link>
         </li>
         <li>
-          <Link href="/Labs/Lab2">Lab 2 - CSS</Link>
+          <Link href="/Labs/Lab2" id="wd-lab2-link">
+            Lab 2: CSS Basics{" "}
+          </Link>
         </li>
         <li>
-          <Link href="/Labs/Lab3">Lab 3 - JavaScript</Link>
-        </li>
-      </ul>
-
-      <h3>Kambaz Application</h3>
-      <ul>
-        <li>
-          <Link href="/">Go to Kambaz</Link>
+          <Link href="/Labs/Lab3" id="wd-lab3-link">
+            Lab 3: JavaScript Fundamentals{" "}
+          </Link>
         </li>
         <li>
-          <a href="https://kambaz-next-js-fawn.vercel.app" target="_blank">
-            Kambaz on Vercel (Deployed)
-          </a>
-        </li>
-      </ul>
-
-      <h3>Source Code Repository</h3>
-      <ul>
-        <li>
-          <a
-            href="https://github.com/akashshetty1997/kambaz-next-js"
-            id="wd-github"
-            target="_blank"
-          >
-            GitHub Repository
-          </a>
+          <Link href="/" id="wd-lab3-link">
+            Kambaz{" "}
+          </Link>{" "}
         </li>
       </ul>
     </div>
