@@ -1,12 +1,16 @@
+import Image from "next/image";
+
 export default function Float() {
   return (
     <div>
       <div id="wd-float-divs">
         <h2>Float</h2>
         <div>
-          <img
+          <Image
             className="wd-float-right"
             src="https://www.staradvertiser.com/wp-content/uploads/2021/08/web1_Starship-gap2.jpg"
+            width={200}
+            height={150}
             alt="Starship"
           />
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius hic
@@ -23,9 +27,11 @@ export default function Float() {
           saepe sapiente sequi similique sint sit soluta suscipit tempora
           tempore temporibus tenetur totam ullam unde ut vel velit veniam vero
           vitae voluptas voluptate voluptatem voluptates voluptatum.
-          <img
+          <Image
             className="wd-float-left"
             src="https://www.staradvertiser.com/wp-content/uploads/2021/08/web1_Starship-gap2.jpg"
+            width={200}
+            height={150}
             alt="Starship"
           />
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius hic
@@ -42,9 +48,11 @@ export default function Float() {
           saepe sapiente sequi similique sint sit soluta suscipit tempora
           tempore temporibus tenetur totam ullam unde ut vel velit veniam vero
           vitae voluptas voluptate voluptatem voluptates voluptatum.
-          <img
+          <Image
             className="wd-float-right"
             src="https://www.staradvertiser.com/wp-content/uploads/2021/08/web1_Starship-gap2.jpg"
+            width={200}
+            height={150}
             alt="Starship"
           />
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius hic
@@ -61,9 +69,11 @@ export default function Float() {
           saepe sapiente sequi similique sint sit soluta suscipit tempora
           tempore temporibus tenetur totam ullam unde ut vel velit veniam vero
           vitae voluptas voluptate voluptatem voluptates voluptatum.
-          <img
+          <Image
             className="wd-float-left"
             src="https://www.staradvertiser.com/wp-content/uploads/2021/08/web1_Starship-gap2.jpg"
+            width={200}
+            height={150}
             alt="Starship"
           />
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius hic
@@ -96,9 +106,11 @@ export default function Float() {
           <div className="wd-float-left wd-dimension-portrait wd-bg-color-red">
             Red
           </div>
-          <img
+          <Image
             className="wd-float-right"
             src="https://www.staradvertiser.com/wp-content/uploads/2021/08/web1_Starship-gap2.jpg"
+            width={200}
+            height={150}
             alt="Starship"
           />
           <div className="wd-float-done"></div>

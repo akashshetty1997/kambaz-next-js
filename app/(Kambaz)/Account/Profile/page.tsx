@@ -1,4 +1,4 @@
-import { FormControl, FormLabel, Button } from "react-bootstrap";
+import { FormControl, FormLabel } from "react-bootstrap";
 import Link from "next/link";
 
 export default function Profile() {

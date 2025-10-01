@@ -8,6 +8,7 @@ import {
   Col,
 } from "react-bootstrap";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Dashboard() {
   return (
@@ -24,12 +25,13 @@ export default function Dashboard() {
                 href="/Courses/1234/Home"
                 className="wd-dashboard-course-link text-decoration-none text-dark"
               >
-                <img
+                <Image
                   className="card-img-top"
                   src="/images/reactjs.jpg"
-                  width="100%"
+                  width={300}
                   height={160}
                   alt="React JS"
+                  style={{ objectFit: "cover", width: "100%" }}
                 />
                 <CardBody>
                   <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden">
@@ -53,12 +55,13 @@ export default function Dashboard() {
                 href="/Courses/1234/Home"
                 className="wd-dashboard-course-link text-decoration-none text-dark"
               >
-                <img
+                <Image
                   className="card-img-top"
                   src="/images/node-js.jpg"
-                  width="100%"
+                  width={300}
                   height={160}
                   alt="Node JS"
+                  style={{ objectFit: "cover", width: "100%" }}
                 />
                 <CardBody>
                   <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden">
@@ -82,12 +85,13 @@ export default function Dashboard() {
                 href="/Courses/1234/Home"
                 className="wd-dashboard-course-link text-decoration-none text-dark"
               >
-                <img
+                <Image
                   className="card-img-top"
                   src="/images/mongodb.jpg"
-                  width="100%"
+                  width={300}
                   height={160}
                   alt="MongoDB"
+                  style={{ objectFit: "cover", width: "100%" }}
                 />
                 <CardBody>
                   <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden">
@@ -111,12 +115,13 @@ export default function Dashboard() {
                 href="/Courses/1234/Home"
                 className="wd-dashboard-course-link text-decoration-none text-dark"
               >
-                <img
+                <Image
                   className="card-img-top"
                   src="/images/python.jpg"
-                  width="100%"
+                  width={300}
                   height={160}
                   alt="Python"
+                  style={{ objectFit: "cover", width: "100%" }}
                 />
                 <CardBody>
                   <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden">
@@ -140,12 +145,13 @@ export default function Dashboard() {
                 href="/Courses/1234/Home"
                 className="wd-dashboard-course-link text-decoration-none text-dark"
               >
-                <img
+                <Image
                   className="card-img-top"
                   src="/images/java.jpg"
-                  width="100%"
+                  width={300}
                   height={160}
                   alt="Java"
+                  style={{ objectFit: "cover", width: "100%" }}
                 />
                 <CardBody>
                   <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden">
@@ -169,12 +175,13 @@ export default function Dashboard() {
                 href="/Courses/1234/Home"
                 className="wd-dashboard-course-link text-decoration-none text-dark"
               >
-                <img
+                <Image
                   className="card-img-top"
                   src="/images/typescript.jpg"
-                  width="100%"
+                  width={300}
                   height={160}
                   alt="TypeScript"
+                  style={{ objectFit: "cover", width: "100%" }}
                 />
                 <CardBody>
                   <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden">
@@ -198,12 +205,13 @@ export default function Dashboard() {
                 href="/Courses/1234/Home"
                 className="wd-dashboard-course-link text-decoration-none text-dark"
               >
-                <img
+                <Image
                   className="card-img-top"
                   src="/images/angular.jpg"
-                  width="100%"
+                  width={300}
                   height={160}
                   alt="Angular"
+                  style={{ objectFit: "cover", width: "100%" }}
                 />
                 <CardBody>
                   <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden">

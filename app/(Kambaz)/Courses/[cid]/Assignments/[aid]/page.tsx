@@ -2,7 +2,6 @@ import {
   FormControl,
   FormLabel,
   FormSelect,
-  Button,
   Row,
   Col,
   Form,
@@ -14,7 +13,7 @@ export default async function AssignmentEditor({
 }: {
   params: Promise<{ cid: string; aid: string }>;
 }) {
-  const { cid, aid } = await params;
+  const { cid } = await params;
 
   return (
     <div id="wd-assignments-editor" className="container">
