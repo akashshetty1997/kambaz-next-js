@@ -1,5 +1,13 @@
+import {
+  Card,
+  CardBody,
+  CardTitle,
+  CardText,
+  Button,
+  Row,
+  Col,
+} from "react-bootstrap";
 import Link from "next/link";
-import Image from "next/image";
 
 export default function Dashboard() {
   return (
@@ -9,113 +17,210 @@ export default function Dashboard() {
       <h2 id="wd-dashboard-published">Published Courses (7)</h2>
       <hr />
       <div id="wd-dashboard-courses">
-        <div className="wd-dashboard-course">
-          <Link href="/Courses/1234" className="wd-dashboard-course-link">
-            <Image
-              src="/images/reactjs.jpg"
-              width={200}
-              height={150}
-              alt="React"
-            />
-            <div>
-              <h5>CS1234 React JS</h5>
-              <p className="wd-dashboard-course-title">
-                Full Stack software developer
-              </p>
-              <button>Go</button>
-            </div>
-          </Link>
-        </div>
-        <div className="wd-dashboard-course">
-          <Link href="/Courses/5678" className="wd-dashboard-course-link">
-            <Image 
-              src="/images/nextjs.jpg"
-              width={200}
-              height={150}
-              alt="Course"
-            />
-            <div>
-              <h5>CS5678 Next.js</h5>
-              <p>Web Development</p>
-              <button>Go</button>
-            </div>
-          </Link>
-        </div>
-        <div className="wd-dashboard-course">
-          <Link href="/Courses/9012" className="wd-dashboard-course-link">
-            <Image
-              src="/images/database.jpg"
-              width={200}
-              height={150}
-              alt="Course"
-            />
-            <div>
-              <h5>CS9012 Databases</h5>
-              <p>SQL & NoSQL</p>
-              <button>Go</button>
-            </div>
-          </Link>
-        </div>
-        <div className="wd-dashboard-course">
-          <Link href="/Courses/3456" className="wd-dashboard-course-link">
-            <Image
-              src="/images/node-js.jpg"
-              width={200}
-              height={150}
-              alt="Course"
-            />
-            <div>
-              <h5>CS3456 Node.js</h5>
-              <p>Backend Development</p>
-              <button>Go</button>
-            </div>
-          </Link>
-        </div>
-        <div className="wd-dashboard-course">
-          <Link href="/Courses/7890" className="wd-dashboard-course-link">
-            <Image
-              src="/images/python.jpg"
-              width={200}
-              height={150}
-              alt="Course"
-            />
-            <div>
-              <h5>CS7890 Python</h5>
-              <p>Data Science & ML</p>
-              <button>Go</button>
-            </div>
-          </Link>
-        </div>
-        <div className="wd-dashboard-course">
-          <Link href="/Courses/2345" className="wd-dashboard-course-link">
-            <Image
-              src="/images/javascript.jpg"
-              width={200}
-              height={150}
-              alt="Course"
-            />
-            <div>
-              <h5>CS2345 Angular</h5>
-              <p>Frontend Framework</p>
-              <button>Go</button>
-            </div>
-          </Link>
-        </div>
-        <div className="wd-dashboard-course">
-          <Link href="/Courses/6789" className="wd-dashboard-course-link">
-            <Image
-              src="/images/azure.jpg"
-              width={200}
-              height={150}
-              alt="Course"
-            />
-            <div>
-              <h5>CS6789 Cloud Computing</h5>
-              <p>AWS & Azure</p>
-              <button>Go</button>
-            </div>
-          </Link>
-        </div>
+        <Row className="g-4">
+          <Col xs={12} md={6} lg={4} xl={3} className="wd-dashboard-course">
+            <Card style={{ width: "100%" }}>
+              <Link
+                href="/Courses/1234/Home"
+                className="wd-dashboard-course-link text-decoration-none text-dark"
+              >
+                <img
+                  className="card-img-top"
+                  src="/images/reactjs.jpg"
+                  width="100%"
+                  height={160}
+                  alt="React JS"
+                />
+                <CardBody>
+                  <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden">
+                    CS1234 React JS
+                  </CardTitle>
+                  <CardText
+                    className="wd-dashboard-course-description overflow-hidden"
+                    style={{ height: "100px" }}
+                  >
+                    Full Stack software developer
+                  </CardText>
+                  <Button variant="primary">Go</Button>
+                </CardBody>
+              </Link>
+            </Card>
+          </Col>
+
+          <Col xs={12} md={6} lg={4} xl={3} className="wd-dashboard-course">
+            <Card style={{ width: "100%" }}>
+              <Link
+                href="/Courses/1234/Home"
+                className="wd-dashboard-course-link text-decoration-none text-dark"
+              >
+                <img
+                  className="card-img-top"
+                  src="/images/node-js.jpg"
+                  width="100%"
+                  height={160}
+                  alt="Node JS"
+                />
+                <CardBody>
+                  <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden">
+                    CS2345 Node JS
+                  </CardTitle>
+                  <CardText
+                    className="wd-dashboard-course-description overflow-hidden"
+                    style={{ height: "100px" }}
+                  >
+                    Backend development with Node.js
+                  </CardText>
+                  <Button variant="primary">Go</Button>
+                </CardBody>
+              </Link>
+            </Card>
+          </Col>
+
+          <Col xs={12} md={6} lg={4} xl={3} className="wd-dashboard-course">
+            <Card style={{ width: "100%" }}>
+              <Link
+                href="/Courses/1234/Home"
+                className="wd-dashboard-course-link text-decoration-none text-dark"
+              >
+                <img
+                  className="card-img-top"
+                  src="/images/mongodb.jpg"
+                  width="100%"
+                  height={160}
+                  alt="MongoDB"
+                />
+                <CardBody>
+                  <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden">
+                    CS3456 MongoDB
+                  </CardTitle>
+                  <CardText
+                    className="wd-dashboard-course-description overflow-hidden"
+                    style={{ height: "100px" }}
+                  >
+                    NoSQL database fundamentals
+                  </CardText>
+                  <Button variant="primary">Go</Button>
+                </CardBody>
+              </Link>
+            </Card>
+          </Col>
+
+          <Col xs={12} md={6} lg={4} xl={3} className="wd-dashboard-course">
+            <Card style={{ width: "100%" }}>
+              <Link
+                href="/Courses/1234/Home"
+                className="wd-dashboard-course-link text-decoration-none text-dark"
+              >
+                <img
+                  className="card-img-top"
+                  src="/images/python.jpg"
+                  width="100%"
+                  height={160}
+                  alt="Python"
+                />
+                <CardBody>
+                  <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden">
+                    CS4567 Python
+                  </CardTitle>
+                  <CardText
+                    className="wd-dashboard-course-description overflow-hidden"
+                    style={{ height: "100px" }}
+                  >
+                    Introduction to Python programming
+                  </CardText>
+                  <Button variant="primary">Go</Button>
+                </CardBody>
+              </Link>
+            </Card>
+          </Col>
+
+          <Col xs={12} md={6} lg={4} xl={3} className="wd-dashboard-course">
+            <Card style={{ width: "100%" }}>
+              <Link
+                href="/Courses/1234/Home"
+                className="wd-dashboard-course-link text-decoration-none text-dark"
+              >
+                <img
+                  className="card-img-top"
+                  src="/images/java.jpg"
+                  width="100%"
+                  height={160}
+                  alt="Java"
+                />
+                <CardBody>
+                  <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden">
+                    CS5678 Java
+                  </CardTitle>
+                  <CardText
+                    className="wd-dashboard-course-description overflow-hidden"
+                    style={{ height: "100px" }}
+                  >
+                    Object-oriented programming in Java
+                  </CardText>
+                  <Button variant="primary">Go</Button>
+                </CardBody>
+              </Link>
+            </Card>
+          </Col>
+
+          <Col xs={12} md={6} lg={4} xl={3} className="wd-dashboard-course">
+            <Card style={{ width: "100%" }}>
+              <Link
+                href="/Courses/1234/Home"
+                className="wd-dashboard-course-link text-decoration-none text-dark"
+              >
+                <img
+                  className="card-img-top"
+                  src="/images/typescript.jpg"
+                  width="100%"
+                  height={160}
+                  alt="TypeScript"
+                />
+                <CardBody>
+                  <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden">
+                    CS6789 TypeScript
+                  </CardTitle>
+                  <CardText
+                    className="wd-dashboard-course-description overflow-hidden"
+                    style={{ height: "100px" }}
+                  >
+                    Typed JavaScript development
+                  </CardText>
+                  <Button variant="primary">Go</Button>
+                </CardBody>
+              </Link>
+            </Card>
+          </Col>
+
+          <Col xs={12} md={6} lg={4} xl={3} className="wd-dashboard-course">
+            <Card style={{ width: "100%" }}>
+              <Link
+                href="/Courses/1234/Home"
+                className="wd-dashboard-course-link text-decoration-none text-dark"
+              >
+                <img
+                  className="card-img-top"
+                  src="/images/angular.jpg"
+                  width="100%"
+                  height={160}
+                  alt="Angular"
+                />
+                <CardBody>
+                  <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden">
+                    CS7890 Angular
+                  </CardTitle>
+                  <CardText
+                    className="wd-dashboard-course-description overflow-hidden"
+                    style={{ height: "100px" }}
+                  >
+                    Building apps with Angular framework
+                  </CardText>
+                  <Button variant="primary">Go</Button>
+                </CardBody>
+              </Link>
+            </Card>
+          </Col>
+        </Row>
       </div>
     </div>
   );
