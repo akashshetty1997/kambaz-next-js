@@ -12,6 +12,7 @@ export default function TOC() {
     { href: "/Labs/Lab2", label: "Lab 2", id: "wd-lab2" },
     { href: "/Labs/Lab3", label: "Lab 3", id: "wd-lab3" },
     { href: "/", label: "Kambaz", id: "wd-kambaz" },
+    { href:"https://github.com/akashshetty1997/kambaz-next-js", label: "My GitHub", id: "wd-github" }
   ];
 
   return (

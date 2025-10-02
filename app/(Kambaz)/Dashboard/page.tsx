@@ -31,7 +31,7 @@ export default function Dashboard() {
                   width={300}
                   height={160}
                   alt="React JS"
-                  style={{ objectFit: "cover", width: "100%" }}
+                  style={{ objectFit: "cover", width: "100%", height: "160px" }}
                 />
                 <CardBody>
                   <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden">
@@ -61,7 +61,7 @@ export default function Dashboard() {
                   width={300}
                   height={160}
                   alt="Node JS"
-                  style={{ objectFit: "cover", width: "100%" }}
+                  style={{ objectFit: "cover", width: "100%", height: "160px" }}
                 />
                 <CardBody>
                   <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden">
@@ -91,7 +91,7 @@ export default function Dashboard() {
                   width={300}
                   height={160}
                   alt="MongoDB"
-                  style={{ objectFit: "cover", width: "100%" }}
+                  style={{ objectFit: "cover", width: "100%", height: "160px" }}
                 />
                 <CardBody>
                   <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden">
@@ -121,7 +121,7 @@ export default function Dashboard() {
                   width={300}
                   height={160}
                   alt="Python"
-                  style={{ objectFit: "cover", width: "100%" }}
+                  style={{ objectFit: "cover", width: "100%", height: "160px" }}
                 />
                 <CardBody>
                   <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden">
@@ -151,7 +151,7 @@ export default function Dashboard() {
                   width={300}
                   height={160}
                   alt="Java"
-                  style={{ objectFit: "cover", width: "100%" }}
+                  style={{ objectFit: "cover", width: "100%", height: "160px" }}
                 />
                 <CardBody>
                   <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden">
@@ -181,7 +181,7 @@ export default function Dashboard() {
                   width={300}
                   height={160}
                   alt="TypeScript"
-                  style={{ objectFit: "cover", width: "100%" }}
+                  style={{ objectFit: "cover", width: "100%", height: "160px" }}
                 />
                 <CardBody>
                   <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden">
@@ -211,7 +211,7 @@ export default function Dashboard() {
                   width={300}
                   height={160}
                   alt="Angular"
-                  style={{ objectFit: "cover", width: "100%" }}
+                  style={{ objectFit: "cover", width: "100%", height: "160px" }}
                 />
                 <CardBody>
                   <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden">
