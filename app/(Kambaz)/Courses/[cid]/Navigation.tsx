@@ -33,6 +33,11 @@ export default function CourseNavigation({ cid }: { cid: string }) {
       label: "People",
       id: "wd-course-people-link",
     },
+    {
+      href: `/Courses/${cid}/Grades`,
+      label: "Grades",
+      id: "wd-course-grades-link",
+    },
   ];
 
   return (
