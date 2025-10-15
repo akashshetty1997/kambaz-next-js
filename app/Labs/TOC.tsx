@@ -7,12 +7,15 @@ export default function TOC() {
   const pathname = usePathname();
 
   const links = [
-    { href: "/Labs", label: "Labs", id: "wd-labs" },
-    { href: "/Labs/Lab1", label: "Lab 1", id: "wd-lab1" },
-    { href: "/Labs/Lab2", label: "Lab 2", id: "wd-lab2" },
-    { href: "/Labs/Lab3", label: "Lab 3", id: "wd-lab3" },
-    { href: "/", label: "Kambaz", id: "wd-kambaz" },
-    { href:"https://github.com/akashshetty1997/kambaz-next-js", label: "My GitHub", id: "wd-github" }
+    { href: "/Labs", label: "Labs" },
+    { href: "/Labs/Lab1", label: "Lab 1" },
+    { href: "/Labs/Lab2", label: "Lab 2" },
+    { href: "/Labs/Lab3", label: "Lab 3" },
+    { href: "/", label: "Kambaz" },
+    {
+      href: "https://github.com/akashshetty1997/kambaz-next-js",
+      label: "My GitHub",
+    },
   ];
 
   return (
@@ -20,15 +23,14 @@ export default function TOC() {
       {links.map((link) => (
         <NavItem key={link.href}>
           <NavLink
-            href={link.href}
             as={Link}
-            active={pathname === link.href}
-            id={link.id}
+            href={link.href}
+            className={`nav-link ${pathname === link.href ? "active" : ""}`}
           >
             {link.label}
           </NavLink>
         </NavItem>
-      ))} 
+      ))}
     </Nav>
   );
 }

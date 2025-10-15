@@ -1,3 +1,4 @@
+"use client";
 import {
   FormControl,
   FormLabel,
@@ -7,30 +8,18 @@ import {
   Form,
 } from "react-bootstrap";
 import Link from "next/link";
+import { useParams } from "next/navigation";
+import { assignments } from "../../../../Database";
 
-export default async function AssignmentEditor({
-  params,
-}: {
-  params: Promise<{ cid: string; aid: string }>;
-}) {
-  const { cid } = await params;
+export default function AssignmentEditor() {
+  const { cid, aid } = useParams();
+  const assignment = assignments.find((a: any) => a._id === aid);
 
-  return (
-    <div id="wd-assignments-editor" className="container">
-      <FormLabel htmlFor="wd-name">Assignment Name</FormLabel>
-      <FormControl
-        id="wd-name"
-        defaultValue="A1 - ENV + HTML"
-        className="mb-3"
-      />
-
-      <FormLabel htmlFor="wd-description">Description</FormLabel>
-      <Form.Control
-        as="textarea"
-        id="wd-description"
-        rows={10}
-        className="mb-3"
-        defaultValue={`The assignment is available online
+  // graceful defaults if properties not in database
+  const title = assignment?.title || "Untitled Assignment";
+  const description =
+    assignment?.description ||
+    `The assignment is available online
 
 Submit a link to the landing page of your Web application running on Netlify.
 
@@ -40,7 +29,28 @@ The landing page should include the following:
 - Link to the Kambaz application
 - Links to all relevant source code repositories
 
-The Kambaz application should include a link to navigate back to the landing page.`}
+The Kambaz application should include a link to navigate back to the landing page.`;
+
+  const points = assignment?.points ?? 100;
+  const dueDate = assignment?.dueDate || "2025-10-20";
+  const availableDate = assignment?.availableDate || "2025-10-10";
+
+  if (!assignment) {
+    return <div className="p-3 text-danger">Assignment not found.</div>;
+  }
+
+  return (
+    <div id="wd-assignments-editor" className="container p-3">
+      <FormLabel htmlFor="wd-name">Assignment Name</FormLabel>
+      <FormControl id="wd-name" defaultValue={title} className="mb-3" />
+
+      <FormLabel htmlFor="wd-description">Description</FormLabel>
+      <Form.Control
+        as="textarea"
+        id="wd-description"
+        rows={10}
+        className="mb-3"
+        defaultValue={description}
       />
 
       <Row className="mb-3">
@@ -48,7 +58,7 @@ The Kambaz application should include a link to navigate back to the landing pag
           <FormLabel htmlFor="wd-points">Points</FormLabel>
         </Col>
         <Col md={9}>
-          <FormControl id="wd-points" defaultValue={100} />
+          <FormControl id="wd-points" defaultValue={points} />
         </Col>
       </Row>
 
@@ -57,7 +67,7 @@ The Kambaz application should include a link to navigate back to the landing pag
           <FormLabel htmlFor="wd-group">Assignment Group</FormLabel>
         </Col>
         <Col md={9}>
-          <FormSelect id="wd-group">
+          <FormSelect id="wd-group" defaultValue="ASSIGNMENTS">
             <option>ASSIGNMENTS</option>
             <option>QUIZZES</option>
             <option>EXAMS</option>
@@ -71,7 +81,7 @@ The Kambaz application should include a link to navigate back to the landing pag
           <FormLabel htmlFor="wd-display-grade-as">Display Grade as</FormLabel>
         </Col>
         <Col md={9}>
-          <FormSelect id="wd-display-grade-as">
+          <FormSelect id="wd-display-grade-as" defaultValue="Percentage">
             <option>Percentage</option>
             <option>Points</option>
             <option>Complete/Incomplete</option>
@@ -92,35 +102,11 @@ The Kambaz application should include a link to navigate back to the landing pag
             </FormSelect>
 
             <FormLabel className="d-block mb-2">Online Entry Options</FormLabel>
-            <Form.Check
-              type="checkbox"
-              label="Text Entry"
-              id="wd-text-entry"
-              className="mb-1"
-            />
-            <Form.Check
-              type="checkbox"
-              label="Website URL"
-              id="wd-website-url"
-              className="mb-1"
-            />
-            <Form.Check
-              type="checkbox"
-              label="Media Recordings"
-              id="wd-media-recordings"
-              className="mb-1"
-            />
-            <Form.Check
-              type="checkbox"
-              label="Student Annotation"
-              id="wd-student-annotation"
-              className="mb-1"
-            />
-            <Form.Check
-              type="checkbox"
-              label="File Uploads"
-              id="wd-file-upload"
-            />
+            <Form.Check type="checkbox" label="Text Entry" />
+            <Form.Check type="checkbox" label="Website URL" />
+            <Form.Check type="checkbox" label="Media Recordings" />
+            <Form.Check type="checkbox" label="Student Annotation" />
+            <Form.Check type="checkbox" label="File Uploads" />
           </div>
         </Col>
       </Row>
@@ -140,9 +126,9 @@ The Kambaz application should include a link to navigate back to the landing pag
 
             <FormLabel htmlFor="wd-due-date">Due</FormLabel>
             <FormControl
-              type="datetime-local"
+              type="date"
               id="wd-due-date"
-              defaultValue="2024-05-13T23:59"
+              defaultValue={dueDate}
               className="mb-3"
             />
 
@@ -152,17 +138,17 @@ The Kambaz application should include a link to navigate back to the landing pag
                   Available from
                 </FormLabel>
                 <FormControl
-                  type="datetime-local"
+                  type="date"
                   id="wd-available-from"
-                  defaultValue="2024-05-06T00:00"
+                  defaultValue={availableDate}
                 />
               </Col>
               <Col md={6}>
                 <FormLabel htmlFor="wd-available-until">Until</FormLabel>
                 <FormControl
-                  type="datetime-local"
+                  type="date"
                   id="wd-available-until"
-                  defaultValue="2024-05-20T23:59"
+                  defaultValue="2025-10-30"
                 />
               </Col>
             </Row>
