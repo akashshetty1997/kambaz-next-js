@@ -68,7 +68,7 @@ export default function KambazNavigation() {
         target="_blank" 
         href="https://www.northeastern.edu/" 
         id="wd-neu-link">
-        <img src="/images/NULOGO.png" width="75px" alt="Northeastern University" />
+        <img src="/images/NEU.png" width="75px" alt="Northeastern University" />
       </ListGroupItem>
 
       <ListGroupItem className="border-0 bg-black text-center">
