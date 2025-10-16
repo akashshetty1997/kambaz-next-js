@@ -1,3 +1,6 @@
+/* eslint-disable prefer-const */
+/* eslint react/jsx-key: "off" */
+
 export default function AddingAndRemovingToFromArrays() {
   let numberArray1 = [1, 2, 3, 4, 5];
   let stringArray1 = ["string1", "string2"];

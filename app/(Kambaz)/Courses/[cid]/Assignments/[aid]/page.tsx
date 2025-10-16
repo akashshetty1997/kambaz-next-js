@@ -1,3 +1,4 @@
+/* eslint @typescript-eslint/no-explicit-any: "off" */
 "use client";
 import {
   FormControl,
@@ -15,29 +16,22 @@ export default function AssignmentEditor() {
   const { cid, aid } = useParams();
   const assignment = assignments.find((a: any) => a._id === aid);
 
-  // graceful defaults if properties not in database
-  const title = assignment?.title || "Untitled Assignment";
-  const description =
-    assignment?.description ||
-    `The assignment is available online
-
-Submit a link to the landing page of your Web application running on Netlify.
-
-The landing page should include the following:
-- Your full name and section
-- Links to each of the lab assignments
-- Link to the Kambaz application
-- Links to all relevant source code repositories
-
-The Kambaz application should include a link to navigate back to the landing page.`;
-
-  const points = assignment?.points ?? 100;
-  const dueDate = assignment?.dueDate || "2025-10-20";
-  const availableDate = assignment?.availableDate || "2025-10-10";
-
   if (!assignment) {
     return <div className="p-3 text-danger">Assignment not found.</div>;
   }
+
+  // Use properties directly from the assignment object
+  const {
+    title,
+    description,
+    points,
+    dueDate,
+    availableDate,
+    group,
+    displayGradeAs,
+    submissionType,
+    assignTo,
+  } = assignment;
 
   return (
     <div id="wd-assignments-editor" className="container p-3">
@@ -67,7 +61,7 @@ The Kambaz application should include a link to navigate back to the landing pag
           <FormLabel htmlFor="wd-group">Assignment Group</FormLabel>
         </Col>
         <Col md={9}>
-          <FormSelect id="wd-group" defaultValue="ASSIGNMENTS">
+          <FormSelect id="wd-group" defaultValue={group}>
             <option>ASSIGNMENTS</option>
             <option>QUIZZES</option>
             <option>EXAMS</option>
@@ -81,7 +75,7 @@ The Kambaz application should include a link to navigate back to the landing pag
           <FormLabel htmlFor="wd-display-grade-as">Display Grade as</FormLabel>
         </Col>
         <Col md={9}>
-          <FormSelect id="wd-display-grade-as" defaultValue="Percentage">
+          <FormSelect id="wd-display-grade-as" defaultValue={displayGradeAs}>
             <option>Percentage</option>
             <option>Points</option>
             <option>Complete/Incomplete</option>
@@ -95,7 +89,11 @@ The Kambaz application should include a link to navigate back to the landing pag
         </Col>
         <Col md={9}>
           <div className="border p-3">
-            <FormSelect id="wd-submission-type" className="mb-3">
+            <FormSelect
+              id="wd-submission-type"
+              className="mb-3"
+              defaultValue={submissionType}
+            >
               <option>Online</option>
               <option>Paper</option>
               <option>External Tool</option>
@@ -120,7 +118,7 @@ The Kambaz application should include a link to navigate back to the landing pag
             <FormLabel htmlFor="wd-assign-to">Assign to</FormLabel>
             <FormControl
               id="wd-assign-to"
-              defaultValue="Everyone"
+              defaultValue={assignTo}
               className="mb-3"
             />
 

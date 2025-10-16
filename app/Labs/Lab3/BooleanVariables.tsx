@@ -1,4 +1,4 @@
-// app/Labs/Lab3/BooleanVariables.tsx
+/* eslint-disable prefer-const */
 export default function BooleanVariables() {
   let numberVariable = 123,
     floatingPointNumber = 234.345;

@@ -1,3 +1,6 @@
+/* eslint-disable prefer-const */
+/* eslint no-var: "off" */
+
 export default function VariablesAndConstants() {
   var functionScoped = 2;
   let blockScoped = 5;

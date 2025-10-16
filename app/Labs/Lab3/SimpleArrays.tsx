@@ -1,3 +1,7 @@
+/* eslint react/jsx-key: "off" */
+/* eslint-disable prefer-const */
+/* eslint no-var: "off" */
+
 export default function SimpleArrays() {
   var functionScoped = 2;
   let blockScoped = 5;

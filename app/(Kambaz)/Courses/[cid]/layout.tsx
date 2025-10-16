@@ -3,7 +3,6 @@
 import { ReactNode, use } from "react";
 import CourseNavigation from "./Navigation";
 import { FaAlignJustify } from "react-icons/fa6";
-import { usePathname } from "next/navigation";
 import { courses } from "../../Database";
 import Breadcrumb from "./Breadcrumb";
 
@@ -15,7 +14,6 @@ export default function CourseLayout({
   params: Promise<{ cid: string }>;
 }) {
   const { cid } = use(params);
-  const pathname = usePathname();
 
   const course = courses.find((course) => course._id === cid);
 

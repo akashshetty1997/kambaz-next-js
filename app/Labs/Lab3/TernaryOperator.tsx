@@ -1,4 +1,4 @@
-// app/Labs/Lab3/TernaryOperator.tsx
+/* eslint-disable prefer-const */
 export default function TernaryOperator() {
   let loggedIn = true;
 

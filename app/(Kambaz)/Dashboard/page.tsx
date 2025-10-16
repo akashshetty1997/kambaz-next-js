@@ -38,9 +38,10 @@ export default function Dashboard() {
                   href={`/Courses/${course._id}/Home`}
                   className="wd-dashboard-course-link text-decoration-none text-dark"
                 >
+                  {/* Dynamically using the image path from the course data */}
                   <Image
                     className="card-img-top"
-                    src={"/images/reactjs.jpg"}
+                    src={course.image || "/images/default_course.jpg"} // fallback image if no image is specified
                     width={300}
                     height={160}
                     alt={course.name}

@@ -1,3 +1,4 @@
+/* eslint @typescript-eslint/no-explicit-any: "off" */
 "use client";
 import { Button, FormControl, ListGroup, ListGroupItem } from "react-bootstrap";
 import { FaPlus } from "react-icons/fa6";
@@ -12,11 +13,6 @@ import { assignments } from "../../../Database";
 export default function Assignments() {
   const { cid } = useParams();
   const courseAssignments = assignments.filter((a: any) => a.course === cid);
-
-  // defaults for missing fields
-  const defaultDueDate = "2025-10-20";
-  const defaultAvailableDate = "2025-10-10";
-  const defaultPoints = 100;
 
   return (
     <div id="wd-assignments">
@@ -68,9 +64,9 @@ export default function Assignments() {
           <ListGroup className="rounded-0">
             {courseAssignments.map((a: any) => {
               const title = a.title || "Untitled Assignment";
-              const dueDate = a.dueDate || defaultDueDate;
-              const availableDate = a.availableDate || defaultAvailableDate;
-              const points = a.points ?? defaultPoints;
+              const dueDate = a.dueDate || "Not Specified";
+              const availableDate = a.availableDate || "Not Specified";
+              const points = a.points ?? 100;
 
               return (
                 <ListGroupItem
