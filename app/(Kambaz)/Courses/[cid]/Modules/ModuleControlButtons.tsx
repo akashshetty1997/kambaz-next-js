@@ -9,10 +9,22 @@ export default function ModuleControlButtons({
   deleteModule,
   editModule,
 }: {
-  moduleId: string;
-  deleteModule: (moduleId: string) => void;
-  editModule: (moduleId: string) => void;
-}) {
+  moduleId?: string;
+  deleteModule?: (moduleId: string) => void;
+  editModule?: (moduleId: string) => void;
+} = {}) {
+  // If no functions passed (student view), just show basic controls
+  if (!deleteModule || !editModule || !moduleId) {
+    return (
+      <div className="float-end">
+        <GreenCheckmark />
+        <BsPlus className="fs-4" />
+        <IoEllipsisVertical className="fs-4" />
+      </div>
+    );
+  }
+
+  // Faculty view with all controls
   return (
     <div className="float-end">
       <FaPencil

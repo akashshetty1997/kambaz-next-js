@@ -19,22 +19,34 @@ export default function Modules() {
   const { cid } = useParams();
   const [moduleName, setModuleName] = useState("");
   const { modules } = useSelector((state: any) => state.modulesReducer);
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
   const dispatch = useDispatch();
+  
+  // Check if user is Faculty
+  const isFaculty = currentUser?.role === "FACULTY";
 
   return (
     <div>
-      <ModulesControls
-        moduleName={moduleName}
-        setModuleName={setModuleName}
-        addModule={() => {
-          dispatch(addModule({ name: moduleName, course: cid }));
-          setModuleName("");
-        }}
-      />
-      <br />
-      <br />
-      <br />
-      <br />
+      {/* Only show ModulesControls for Faculty */}
+      {isFaculty ? (
+        <>
+          <ModulesControls
+            moduleName={moduleName}
+            setModuleName={setModuleName}
+            addModule={() => {
+              dispatch(addModule({ name: moduleName, course: cid }));
+              setModuleName("");
+            }}
+          />
+          <br />
+          <br />
+          <br />
+          <br />
+        </>
+      ) : (
+        // Add spacing for students
+        <div style={{ marginTop: "60px" }}></div>
+      )}
 
       <ListGroup id="wd-modules" className="rounded-0">
         {modules
@@ -48,8 +60,10 @@ export default function Modules() {
               <div className="wd-title p-3 ps-2 bg-secondary d-flex align-items-center justify-content-between">
                 <div className="d-flex align-items-center flex-grow-1">
                   <BsGripVertical className="me-2 fs-3" />
+                  {/* Show module name for everyone */}
                   {!module.editing && module.name}
-                  {module.editing && (
+                  {/* Only show edit input for Faculty */}
+                  {module.editing && isFaculty && (
                     <FormControl
                       className="w-50 d-inline-block"
                       onChange={(e) =>
@@ -66,13 +80,19 @@ export default function Modules() {
                     />
                   )}
                 </div>
-                <ModuleControlButtons
-                  moduleId={module._id}
-                  deleteModule={(moduleId) => {
-                    dispatch(deleteModule(moduleId));
-                  }}
-                  editModule={(moduleId) => dispatch(editModule(moduleId))}
-                />
+                {/* Only show edit/delete buttons for Faculty */}
+                {isFaculty ? (
+                  <ModuleControlButtons
+                    moduleId={module._id}
+                    deleteModule={(moduleId) => {
+                      dispatch(deleteModule(moduleId));
+                    }}
+                    editModule={(moduleId) => dispatch(editModule(moduleId))}
+                  />
+                ) : (
+                  // For students, just show the non-interactive controls
+                  <ModuleControlButtons />
+                )}
               </div>
 
               {/* Lessons List */}
