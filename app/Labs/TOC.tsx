@@ -7,14 +7,16 @@ export default function TOC() {
   const pathname = usePathname();
 
   const links = [
-    { href: "/Labs", label: "Labs" },
-    { href: "/Labs/Lab1", label: "Lab 1" },
-    { href: "/Labs/Lab2", label: "Lab 2" },
-    { href: "/Labs/Lab3", label: "Lab 3" },
+    { href: "/Labs", label: "Labs", id: "wd-labs" },
+    { href: "/Labs/Lab1", label: "Lab 1", id: "wd-lab1" },
+    { href: "/Labs/Lab2", label: "Lab 2", id: "wd-lab2" },
+    { href: "/Labs/Lab3", label: "Lab 3" , id: "wd-lab3"},
+    { href: "/Labs/Lab4", label: "Lab 4", id: "wd-lab4" },
     { href: "/", label: "Kambaz" },
     {
       href: "https://github.com/akashshetty1997/kambaz-next-js",
       label: "My GitHub",
+      id: "wd-github",
     },
   ];
 

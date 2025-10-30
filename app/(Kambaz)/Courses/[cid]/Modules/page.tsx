@@ -1,21 +1,37 @@
 /* eslint @typescript-eslint/no-explicit-any: "off" */
-
 "use client";
-import { ListGroup, ListGroupItem } from "react-bootstrap";
+import { useState } from "react";
+import { ListGroup, ListGroupItem, FormControl } from "react-bootstrap";
 import { BsGripVertical } from "react-icons/bs";
 import ModulesControls from "./ModulesControls";
 import LessonControlButtons from "./LessonControlButtons";
 import ModuleControlButtons from "./ModuleControlButtons";
 import { useParams } from "next/navigation";
-import * as db from "../../../Database"; // adjust path if needed
+import * as db from "../../../Database";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  addModule,
+  editModule,
+  updateModule,
+  deleteModule,
+} from "./reducer";
 
 export default function Modules() {
   const { cid } = useParams();
-  const modules = db.modules;
+  const [moduleName, setModuleName] = useState("");
+  const { modules } = useSelector((state: any) => state.modulesReducer);
+  const dispatch = useDispatch();
 
   return (
     <div>
-      <ModulesControls />
+      <ModulesControls
+        moduleName={moduleName}
+        setModuleName={setModuleName}
+        addModule={() => {
+          dispatch(addModule({ name: moduleName, course: cid }));
+          setModuleName("");
+        }}
+      />
       <br />
       <br />
       <br />
@@ -31,11 +47,33 @@ export default function Modules() {
             >
               {/* Module Title */}
               <div className="wd-title p-3 ps-2 bg-secondary d-flex align-items-center justify-content-between">
-                <div>
+                <div className="d-flex align-items-center flex-grow-1">
                   <BsGripVertical className="me-2 fs-3" />
-                  {module.name}
+                  {!module.editing && module.name}
+                  {module.editing && (
+                    <FormControl
+                      className="w-50 d-inline-block"
+                      onChange={(e) =>
+                        dispatch(
+                          updateModule({ ...module, name: e.target.value })
+                        )
+                      }
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          dispatch(updateModule({ ...module, editing: false }));
+                        }
+                      }}
+                      defaultValue={module.name}
+                    />
+                  )}
                 </div>
-                <ModuleControlButtons />
+                <ModuleControlButtons
+                  moduleId={module._id}
+                  deleteModule={(moduleId) => {
+                    dispatch(deleteModule(moduleId));
+                  }}
+                  editModule={(moduleId) => dispatch(editModule(moduleId))}
+                />
               </div>
 
               {/* Lessons List */}

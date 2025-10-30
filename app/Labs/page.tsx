@@ -20,12 +20,20 @@ export default function Labs() {
           </Link>
         </li>
         <li>
+          <Link href="/Labs/Lab4" id="wd-lab4-link">
+            Lab 4: State & Events
+          </Link>
+        </li>
+        <li>
           <Link href="/" id="wd-lab3-link">
             Kambaz{" "}
           </Link>{" "}
         </li>
         <li>
-          <Link href="https://github.com/akashshetty1997/kambaz-next-js" id="wd-lab3-link">
+          <Link
+            href="https://github.com/akashshetty1997/kambaz-next-js"
+            id="wd-lab3-link"
+          >
             GitHub Repository
           </Link>
         </li>
