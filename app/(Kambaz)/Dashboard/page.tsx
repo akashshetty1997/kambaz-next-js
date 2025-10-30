@@ -91,7 +91,14 @@ export default function Dashboard() {
             <button
               className="btn btn-primary float-end"
               id="wd-add-new-course-click"
-              onClick={() => dispatch(addNewCourse(course))}
+              onClick={() => {
+                dispatch(addNewCourse(course));
+                // After adding, show all courses so faculty can see and enroll
+                setShowAllCourses(true);
+                alert(
+                  "Course created! Click 'Enroll' to enroll yourself in the course."
+                );
+              }}
             >
               Add
             </button>
@@ -169,8 +176,8 @@ export default function Dashboard() {
                     </CardText>
                     <Button variant="primary">Go</Button>
 
-                    {/* Show Enroll/Unenroll button for all logged-in users */}
-                    {currentUser && !isFaculty && (
+                    {/* Show Enroll/Unenroll button for ALL users including Faculty */}
+                    {currentUser && (
                       <button
                         onClick={(event) => handleEnrollment(course._id, event)}
                         className={`btn ${
@@ -192,7 +199,7 @@ export default function Dashboard() {
                             event.preventDefault();
                             dispatch(deleteCourse(course._id));
                           }}
-                          className="btn btn-danger float-end"
+                          className="btn btn-danger float-end me-1"
                           id="wd-delete-course-click"
                         >
                           Delete
@@ -203,7 +210,7 @@ export default function Dashboard() {
                             event.preventDefault();
                             setCourse(course);
                           }}
-                          className="btn btn-warning me-2 float-end"
+                          className="btn btn-warning me-1 float-end"
                         >
                           Edit
                         </button>
