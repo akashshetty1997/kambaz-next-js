@@ -7,7 +7,6 @@ import ModulesControls from "./ModulesControls";
 import LessonControlButtons from "./LessonControlButtons";
 import ModuleControlButtons from "./ModuleControlButtons";
 import { useParams } from "next/navigation";
-import * as db from "../../../Database";
 import { useSelector, useDispatch } from "react-redux";
 import {
   addModule,

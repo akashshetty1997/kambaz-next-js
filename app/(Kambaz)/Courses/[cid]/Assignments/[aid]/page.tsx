@@ -61,7 +61,7 @@ export default function AssignmentEditor() {
     return (
       <div className="p-3">
         <div className="alert alert-warning">
-          You don't have permission to edit assignments.
+          You don&apos;t have permission to edit assignments.
         </div>
         <Link
           href={`/Courses/${cid}/Assignments`}

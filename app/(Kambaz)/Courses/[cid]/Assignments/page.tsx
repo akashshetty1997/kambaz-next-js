@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { Button, FormControl, Modal } from "react-bootstrap";
 import { FaPlus, FaTrash } from "react-icons/fa6";
@@ -145,8 +146,7 @@ export default function Assignments() {
           <Modal.Title>Confirm Delete</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Are you sure you want to delete the assignment "
-          {assignmentToDelete?.title}"?
+          {`Are you sure you want to delete the assignment "${assignmentToDelete?.title}"?`}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
