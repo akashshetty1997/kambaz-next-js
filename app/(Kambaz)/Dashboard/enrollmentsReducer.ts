@@ -1,3 +1,5 @@
+/* eslint @typescript-eslint/no-explicit-any: "off" */
+
 import { createSlice } from "@reduxjs/toolkit";
 import { enrollments } from "../Database";
 
