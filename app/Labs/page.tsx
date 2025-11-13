@@ -26,7 +26,7 @@ export default function Labs() {
         </li>
         <li>
           <Link href="/Labs/Lab5" id="wd-lab5-link">
-            Lab 5: Environment Variables
+            Lab 5: Backend Integration
           </Link>
         </li>
       </ul>
