@@ -1,15 +1,22 @@
+"use client";
+
 import { ReactNode } from "react";
+import { Provider } from "react-redux";
+import store from "../store";
+import Session from "./Session";
 import AccountNavigation from "./Navigation";
 
-export default function AccountLayout({ children }: { children: ReactNode }) {
+export default function KambazLayout({ children }: { children: ReactNode }) {
   return (
-    <div id="wd-account">
-      <div className="d-flex">
-        <div className="d-none d-md-block me-4">
-          <AccountNavigation />
+    <Provider store={store}>
+      <Session>
+        <div id="wd-kambaz" className="d-flex">
+          <div className="d-none d-md-block me-4">
+            <AccountNavigation />
+          </div>
+          <div className="flex-fill">{children}</div>
         </div>
-        <div className="flex-fill">{children}</div>
-      </div>
-    </div>
+      </Session>
+    </Provider>
   );
 }

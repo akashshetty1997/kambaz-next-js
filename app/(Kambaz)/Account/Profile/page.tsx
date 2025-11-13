@@ -1,16 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+
 import { useRouter } from "next/navigation";
 import { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setCurrentUser } from "../reducer";
 import { Button, FormControl, FormLabel } from "react-bootstrap";
+import * as client from "../client";
+import { RootState } from "../../store";
 
 export default function Profile() {
   const [profile, setProfile] = useState<any>({});
   const dispatch = useDispatch();
   const router = useRouter();
-  const { currentUser } = useSelector((state: any) => state.accountReducer);
+  const { currentUser } = useSelector((state: RootState) => state.accountReducer);
 
   const fetchProfile = useCallback(() => {
     if (!currentUser) {
@@ -25,13 +28,18 @@ export default function Profile() {
     router.push("/Account/Signin");
   };
 
+  const updateProfile = async () => {
+    const updatedProfile = await client.updateUser(profile);
+    dispatch(setCurrentUser(updatedProfile));
+  };
+
   useEffect(() => {
     fetchProfile();
   }, [fetchProfile]);
 
   return (
     <div id="wd-profile-screen">
-      <h1>Profile</h1>
+      <h3>Profile</h3>
       {profile && (
         <div>
           <FormLabel htmlFor="wd-username">Username</FormLabel>
@@ -39,20 +47,16 @@ export default function Profile() {
             id="wd-username"
             className="mb-2"
             value={profile.username || ""}
-            onChange={(e) =>
-              setProfile({ ...profile, username: e.target.value })
-            }
+            onChange={(e) => setProfile({ ...profile, username: e.target.value })}
           />
 
           <FormLabel htmlFor="wd-password">Password</FormLabel>
           <FormControl
             id="wd-password"
             className="mb-2"
-            value={profile.password || ""}
-            onChange={(e) =>
-              setProfile({ ...profile, password: e.target.value })
-            }
             type="password"
+            value={profile.password || ""}
+            onChange={(e) => setProfile({ ...profile, password: e.target.value })}
           />
 
           <FormLabel htmlFor="wd-firstname">First Name</FormLabel>
@@ -60,9 +64,7 @@ export default function Profile() {
             id="wd-firstname"
             className="mb-2"
             value={profile.firstName || ""}
-            onChange={(e) =>
-              setProfile({ ...profile, firstName: e.target.value })
-            }
+            onChange={(e) => setProfile({ ...profile, firstName: e.target.value })}
           />
 
           <FormLabel htmlFor="wd-lastname">Last Name</FormLabel>
@@ -70,9 +72,7 @@ export default function Profile() {
             id="wd-lastname"
             className="mb-2"
             value={profile.lastName || ""}
-            onChange={(e) =>
-              setProfile({ ...profile, lastName: e.target.value })
-            }
+            onChange={(e) => setProfile({ ...profile, lastName: e.target.value })}
           />
 
           <FormLabel htmlFor="wd-dob">Date of Birth</FormLabel>
@@ -104,6 +104,14 @@ export default function Profile() {
             <option value="FACULTY">Faculty</option>
             <option value="STUDENT">Student</option>
           </select>
+
+          <Button
+            onClick={updateProfile}
+            className="w-100 btn-primary mb-2"
+            id="wd-update-profile-btn"
+          >
+            Update
+          </Button>
 
           <Button
             onClick={signout}

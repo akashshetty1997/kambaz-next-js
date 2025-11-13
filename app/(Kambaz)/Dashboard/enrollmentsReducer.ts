@@ -1,23 +1,25 @@
 /* eslint @typescript-eslint/no-explicit-any: "off" */
 
 import { createSlice } from "@reduxjs/toolkit";
-import { enrollments } from "../Database";
 
 const initialState = {
-  enrollments: enrollments,
+  enrollments: [] as any[],
 };
 
 const enrollmentsSlice = createSlice({
   name: "enrollments",
   initialState,
   reducers: {
+    setEnrollments: (state, action) => {
+      state.enrollments = action.payload;
+    },
     enrollInCourse: (state, { payload }) => {
       const newEnrollment = {
         _id: new Date().getTime().toString(),
         user: payload.userId,
         course: payload.courseId,
       };
-      state.enrollments.push(newEnrollment);
+      state.enrollments = [...state.enrollments, newEnrollment] as any[];
     },
     unenrollFromCourse: (state, { payload }) => {
       state.enrollments = state.enrollments.filter(
@@ -27,5 +29,5 @@ const enrollmentsSlice = createSlice({
   },
 });
 
-export const { enrollInCourse, unenrollFromCourse } = enrollmentsSlice.actions;
+export const { setEnrollments, enrollInCourse, unenrollFromCourse } = enrollmentsSlice.actions;
 export default enrollmentsSlice.reducer;

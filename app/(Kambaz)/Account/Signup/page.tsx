@@ -1,33 +1,77 @@
-import { FormControl } from "react-bootstrap";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+"use client";
+
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { FormControl, Button } from "react-bootstrap";
+import { setCurrentUser } from "../reducer";
+import * as client from "../client";
 
 export default function Signup() {
+  const [user, setUser] = useState<any>({
+    username: "",
+    password: "",
+  });
+  const [error, setError] = useState<string | null>(null);
+  const dispatch = useDispatch();
+
+  const signup = async () => {
+    try {
+      const currentUser = await client.signup(user);
+      dispatch(setCurrentUser(currentUser));
+      redirect("/Profile");
+    } catch (error: any) {
+      setError(error.response?.data?.message || "Signup failed. Try again.");
+    }
+  };
+
   return (
-    <div id="wd-signup-screen">
+    <div
+      id="wd-signup-screen"
+      className="container mt-4"
+      style={{ maxWidth: 400 }}
+    >
       <h1>Sign up</h1>
-      <FormControl id="wd-username" placeholder="username" className="mb-2" />
+
+      {error && (
+        <div className="alert alert-danger mb-2" id="wd-signup-error">
+          {error}
+        </div>
+      )}
+
+      <FormControl
+        id="wd-username"
+        value={user.username}
+        onChange={(e) => setUser({ ...user, username: e.target.value })}
+        className="mb-2"
+        placeholder="Username"
+      />
+
       <FormControl
         id="wd-password"
-        placeholder="password"
-        type="password"
+        value={user.password}
+        onChange={(e) => setUser({ ...user, password: e.target.value })}
         className="mb-2"
-      />
-      <FormControl
-        id="wd-verify-password"
-        placeholder="verify password"
+        placeholder="Password"
         type="password"
-        className="mb-2"
       />
-      <Link
+
+      <Button
+        onClick={signup}
         id="wd-signup-btn"
-        href="/Dashboard"
-        className="btn btn-primary w-100 mb-2"
+        className="w-100 btn-primary mb-2"
       >
         Sign up
-      </Link>
-      <Link id="wd-signin-link" href="/Account/Signin">
-        Sign in
-      </Link>
+      </Button>
+
+      <div className="text-center">
+        <Link id="wd-signin-link" href="/Account/Signin">
+          Already have an account? Sign in
+        </Link>
+      </div>
     </div>
   );
 }

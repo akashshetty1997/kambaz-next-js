@@ -25,6 +25,13 @@ export default function Labs() {
           </Link>
         </li>
         <li>
+          <Link href="/Labs/Lab5" id="wd-lab5-link">
+            Lab 5: Environment Variables
+          </Link>
+        </li>
+      </ul>
+      <ul>
+        <li>
           <Link href="/" id="wd-lab3-link">
             Kambaz{" "}
           </Link>{" "}

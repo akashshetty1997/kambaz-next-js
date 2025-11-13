@@ -9,8 +9,9 @@ import { CiSearch } from "react-icons/ci";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteAssignment } from "./reducer";
-import { useState } from "react";
+import { setAssignments } from "./reducer";
+import { useState, useEffect, useCallback } from "react";
+import * as client from "../../client";
 
 export default function Assignments() {
   const { cid } = useParams();
@@ -21,17 +22,38 @@ export default function Assignments() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [assignmentToDelete, setAssignmentToDelete] = useState<any>(null);
 
-  const courseAssignments = assignments.filter((a: any) => a.course === cid);
   const isFaculty = currentUser?.role === "FACULTY";
+
+  const fetchAssignments = useCallback(async () => {
+    try {
+      const assignments = await client.findAssignmentsForCourse(cid as string);
+      dispatch(setAssignments(assignments));
+    } catch (error) {
+      console.error("Error fetching assignments:", error);
+    }
+  }, [cid, dispatch]);
+
+  useEffect(() => {
+    fetchAssignments();
+  }, [fetchAssignments]);
 
   const handleDeleteClick = (assignment: any) => {
     setAssignmentToDelete(assignment);
     setShowDeleteModal(true);
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (assignmentToDelete) {
-      dispatch(deleteAssignment(assignmentToDelete._id));
+      try {
+        await client.deleteAssignment(assignmentToDelete._id);
+        dispatch(
+          setAssignments(
+            assignments.filter((a: any) => a._id !== assignmentToDelete._id)
+          )
+        );
+      } catch (error) {
+        console.error("Error deleting assignment:", error);
+      }
     }
     setShowDeleteModal(false);
     setAssignmentToDelete(null);
@@ -88,7 +110,7 @@ export default function Assignments() {
             </div>
           </div>
           <ul className="wd-lessons list-group rounded-0">
-            {courseAssignments.map((assignment: any) => (
+            {assignments.map((assignment: any) => (
               <li
                 key={assignment._id}
                 className="wd-lesson list-group-item p-3 d-flex justify-content-between align-items-start"
@@ -140,7 +162,6 @@ export default function Assignments() {
         </li>
       </ul>
 
-      {/* Delete Confirmation Modal */}
       <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Confirm Delete</Modal.Title>

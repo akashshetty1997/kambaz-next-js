@@ -11,19 +11,16 @@ import {
 } from "react-bootstrap";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import { useSelector, useDispatch } from "react-redux";
-import { addAssignment, updateAssignment } from "../reducer";
+import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
+import * as client from "../../../client";
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();
   const router = useRouter();
-  const dispatch = useDispatch();
-  const { assignments } = useSelector((state: any) => state.assignmentsReducer);
   const { currentUser } = useSelector((state: any) => state.accountReducer);
 
   const isNew = aid === "new";
-  const existingAssignment = assignments.find((a: any) => a._id === aid);
 
   // Initial state matching your database structure
   const [assignment, setAssignment] = useState<any>({
@@ -42,18 +39,41 @@ export default function AssignmentEditor() {
   });
 
   useEffect(() => {
-    if (!isNew && existingAssignment) {
-      setAssignment(existingAssignment);
+    if (!isNew) {
+      // Fetch the assignment from server
+      const fetchAssignment = async () => {
+        try {
+          const assignments = await client.findAssignmentsForCourse(
+            cid as string
+          );
+          const existingAssignment = assignments.find(
+            (a: any) => a._id === aid
+          );
+          if (existingAssignment) {
+            setAssignment(existingAssignment);
+          }
+        } catch (error) {
+          console.error("Error fetching assignment:", error);
+        }
+      };
+      fetchAssignment();
     }
-  }, [existingAssignment, isNew]);
+  }, [aid, cid, isNew]);
 
-  const handleSave = () => {
-    if (isNew) {
-      dispatch(addAssignment({ ...assignment, course: cid }));
-    } else {
-      dispatch(updateAssignment(assignment));
+  const handleSave = async () => {
+    try {
+      if (isNew) {
+        // Create new assignment on server
+        await client.createAssignment(cid as string, assignment);
+      } else {
+        // Update existing assignment on server
+        await client.updateAssignment(assignment);
+      }
+      router.push(`/Courses/${cid}/Assignments`);
+    } catch (error) {
+      console.error("Error saving assignment:", error);
+      alert("Failed to save assignment");
     }
-    router.push(`/Courses/${cid}/Assignments`);
   };
 
   // Only faculty can edit
@@ -71,10 +91,6 @@ export default function AssignmentEditor() {
         </Link>
       </div>
     );
-  }
-
-  if (!isNew && !existingAssignment) {
-    return <div className="p-3 text-danger">Assignment not found.</div>;
   }
 
   return (
