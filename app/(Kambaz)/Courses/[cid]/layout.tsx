@@ -23,21 +23,51 @@ export default function CourseLayout({
   const [showNavigation, setShowNavigation] = useState(true);
 
   // Check if user is enrolled in the course
-  const isEnrolled = enrollments.some(
-    (enrollment: any) =>
-      enrollment.user === currentUser?._id && enrollment.course === cid
-  );
+  const isEnrolled = enrollments.some((enrollment: any) => {
+    if (!enrollment || !enrollment.course || !enrollment.user) {
+      return false;
+    }
+
+    // Handle both populated (object) and non-populated (string) course references
+    const enrollmentCourseId =
+      typeof enrollment.course === "object" && enrollment.course
+        ? enrollment.course._id
+        : enrollment.course;
+
+    // Handle both populated (object) and non-populated (string) user references
+    const enrollmentUserId =
+      typeof enrollment.user === "object" && enrollment.user
+        ? enrollment.user._id
+        : enrollment.user;
+
+    return enrollmentUserId === currentUser?._id && enrollmentCourseId === cid;
+  });
+
+  // Faculty can access any course without enrollment
+  const isFaculty = currentUser?.role === "FACULTY";
+  const canAccess = !currentUser || isFaculty || isEnrolled;
+
+  // Debug logs (remove after fixing)
+  useEffect(() => {
+    console.log("=== ENROLLMENT DEBUG ===");
+    console.log("Current User:", currentUser);
+    console.log("Course ID:", cid);
+    console.log("Enrollments:", enrollments);
+    console.log("Is Enrolled:", isEnrolled);
+    console.log("Is Faculty:", isFaculty);
+    console.log("Can Access:", canAccess);
+  }, [currentUser, cid, enrollments, isEnrolled, isFaculty, canAccess]);
 
   // Protect the route - redirect to Dashboard if not enrolled
   useEffect(() => {
-    if (currentUser && !isEnrolled) {
+    if (currentUser && !canAccess) {
       alert("You must be enrolled in this course to access it.");
       router.push("/Dashboard");
     }
-  }, [currentUser, isEnrolled, router]);
+  }, [currentUser, canAccess, router]);
 
   // Don't render course content if not enrolled
-  if (currentUser && !isEnrolled) {
+  if (currentUser && !canAccess) {
     return (
       <div className="p-3">
         <div className="alert alert-warning">

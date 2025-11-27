@@ -1,22 +1,48 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 "use client";
-import React from "react";
-import { useParams } from "next/navigation"; // ✅ correct package
+import React, { useState, useEffect, useCallback } from "react";
+import { useParams } from "next/navigation";
 import { Table } from "react-bootstrap";
 import { FaUserCircle } from "react-icons/fa";
-import * as db from "../../../../Database/index"; 
+import PeopleDetails from "../Details";
+import * as client from "../../../client";
 
 export default function PeopleTable() {
   const { cid } = useParams();
-  const { users, enrollments } = db;
+  const [users, setUsers] = useState<any[]>([]);
+  const [showDetails, setShowDetails] = useState(false);
+  const [showUserId, setShowUserId] = useState<string | null>(null);
 
-  const enrolledUsers = users.filter((usr) =>
-    enrollments.some(
-      (enroll) => enroll.user === usr._id && enroll.course === cid
-    )
-  );
+  const fetchUsers = useCallback(async () => {
+    if (!cid) return;
+    try {
+      const courseUsers = await client.findUsersForCourse(cid as string);
+      setUsers(courseUsers);
+    } catch (error) {
+      console.error("Error fetching users for course:", error);
+    }
+  }, [cid]);
+
+  useEffect(() => {
+    fetchUsers();
+  }, [fetchUsers]);
 
   return (
     <div id="wd-people-table">
+      <h3>People</h3>
+
+      {showDetails && (
+        <PeopleDetails
+          uid={showUserId}
+          onClose={() => {
+            setShowDetails(false);
+            fetchUsers();
+          }}
+          fetchUsers={fetchUsers}
+        />
+      )}
+
       <Table striped>
         <thead>
           <tr>
@@ -29,22 +55,33 @@ export default function PeopleTable() {
           </tr>
         </thead>
         <tbody>
-          {enrolledUsers.map((user) => (
-            <tr key={user._id}>
-              <td className="wd-full-name text-nowrap">
-                <FaUserCircle className="me-2 fs-1 text-secondary" />
-                <span className="wd-first-name">{user.firstName}</span>{" "}
-                <span className="wd-last-name">{user.lastName}</span>
-              </td>
-              <td className="wd-login-id">{user.loginId}</td>
-              <td className="wd-section">{user.section}</td>
-              <td className="wd-role">{user.role}</td>
-              <td className="wd-last-activity">{user.lastActivity || "N/A"}</td>
-              <td className="wd-total-activity">
-                {user.totalActivity || "N/A"}
-              </td>
-            </tr>
-          ))}
+          {users
+            .filter((user: any) => user != null) // ✅ Add this line
+            .map((user: any) => (
+              <tr key={user._id}>
+                <td className="wd-full-name text-nowrap">
+                  <span
+                    className="text-decoration-none"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      setShowDetails(true);
+                      setShowUserId(user._id);
+                    }}
+                  >
+                    <FaUserCircle className="me-2 fs-1 text-secondary" />
+                    <span className="wd-first-name">{user.firstName}</span>{" "}
+                    <span className="wd-last-name">{user.lastName}</span>
+                  </span>
+                </td>
+                <td className="wd-login-id">{user.loginId}</td>
+                <td className="wd-section">{user.section}</td>
+                <td className="wd-role">{user.role}</td>
+                <td className="wd-last-activity">{user.lastActivity || "N/A"}</td>
+                <td className="wd-total-activity">
+                  {user.totalActivity || "N/A"}
+                </td>
+              </tr>
+            ))}
         </tbody>
       </Table>
     </div>

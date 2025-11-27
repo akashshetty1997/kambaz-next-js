@@ -10,8 +10,10 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import { setAssignments } from "./reducer";
+import { setCurrentUser } from "../../../Account/reducer";
 import { useState, useEffect, useCallback } from "react";
 import * as client from "../../client";
+import * as accountClient from "../../../Account/client";
 
 export default function Assignments() {
   const { cid } = useParams();
@@ -24,7 +26,19 @@ export default function Assignments() {
 
   const isFaculty = currentUser?.role === "FACULTY";
 
+  const fetchProfile = useCallback(async () => {
+    if (!currentUser) {
+      try {
+        const user = await accountClient.profile();
+        dispatch(setCurrentUser(user));
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      }
+    }
+  }, [currentUser, dispatch]);
+
   const fetchAssignments = useCallback(async () => {
+    if (!cid) return;
     try {
       const assignments = await client.findAssignmentsForCourse(cid as string);
       dispatch(setAssignments(assignments));
@@ -34,8 +48,9 @@ export default function Assignments() {
   }, [cid, dispatch]);
 
   useEffect(() => {
+    fetchProfile();
     fetchAssignments();
-  }, [fetchAssignments]);
+  }, [fetchProfile, fetchAssignments]);
 
   const handleDeleteClick = (assignment: any) => {
     setAssignmentToDelete(assignment);
@@ -43,9 +58,9 @@ export default function Assignments() {
   };
 
   const confirmDelete = async () => {
-    if (assignmentToDelete) {
+    if (assignmentToDelete && cid) {
       try {
-        await client.deleteAssignment(assignmentToDelete._id);
+        await client.deleteAssignment(cid as string, assignmentToDelete._id);
         dispatch(
           setAssignments(
             assignments.filter((a: any) => a._id !== assignmentToDelete._id)
@@ -136,7 +151,7 @@ export default function Assignments() {
                       <span className="fw-bold">Not available until</span>
                       <span className="text-muted">
                         {" "}
-                        {assignment.availableDate}
+                        {assignment.availableFrom || assignment.availableDate}
                       </span>
                     </div>
                     <div className="text-muted">

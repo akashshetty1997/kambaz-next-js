@@ -11,14 +11,17 @@ import {
 } from "react-bootstrap";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
-import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useState, useEffect, useCallback } from "react";
+import { setCurrentUser } from "../../../../Account/reducer";
 import * as client from "../../../client";
+import * as accountClient from "../../../../Account/client";
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();
   const router = useRouter();
   const { currentUser } = useSelector((state: any) => state.accountReducer);
+  const dispatch = useDispatch();
 
   const isNew = aid === "new";
 
@@ -30,24 +33,38 @@ export default function AssignmentEditor() {
     course: cid,
     points: 100,
     dueDate: "2025-10-20",
-    availableDate: "2025-10-10",
+    availableFrom: "2025-10-10",
     availableUntil: "2025-10-30",
-    group: "ASSIGNMENTS",
+    assignmentGroup: "ASSIGNMENTS",
     displayGradeAs: "Percentage",
     submissionType: "Online",
     assignTo: "Everyone",
   });
 
+  // ✅ Fetch current user profile on mount
+  const fetchProfile = useCallback(async () => {
+    if (!currentUser) {
+      try {
+        const user = await accountClient.profile();
+        dispatch(setCurrentUser(user));
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      }
+    }
+  }, [currentUser, dispatch]);
+
   useEffect(() => {
-    if (!isNew) {
+    fetchProfile(); // ✅ Fetch profile first
+  }, [fetchProfile]);
+
+  useEffect(() => {
+    if (!isNew && cid && aid) {
       // Fetch the assignment from server
       const fetchAssignment = async () => {
         try {
-          const assignments = await client.findAssignmentsForCourse(
-            cid as string
-          );
-          const existingAssignment = assignments.find(
-            (a: any) => a._id === aid
+          const existingAssignment = await client.findAssignmentById(
+            cid as string,
+            aid as string
           );
           if (existingAssignment) {
             setAssignment(existingAssignment);
@@ -67,7 +84,7 @@ export default function AssignmentEditor() {
         await client.createAssignment(cid as string, assignment);
       } else {
         // Update existing assignment on server
-        await client.updateAssignment(assignment);
+        await client.updateAssignment(cid as string, assignment);
       }
       router.push(`/Courses/${cid}/Assignments`);
     } catch (error) {
@@ -143,9 +160,9 @@ export default function AssignmentEditor() {
         <Col md={9}>
           <FormSelect
             id="wd-group"
-            value={assignment.group}
+            value={assignment.assignmentGroup}
             onChange={(e) =>
-              setAssignment({ ...assignment, group: e.target.value })
+              setAssignment({ ...assignment, assignmentGroup: e.target.value })
             }
           >
             <option value="ASSIGNMENTS">ASSIGNMENTS</option>
@@ -255,11 +272,11 @@ export default function AssignmentEditor() {
                 <FormControl
                   type="date"
                   id="wd-available-from"
-                  value={assignment.availableDate}
+                  value={assignment.availableFrom}
                   onChange={(e) =>
                     setAssignment({
                       ...assignment,
-                      availableDate: e.target.value,
+                      availableFrom: e.target.value,
                     })
                   }
                 />

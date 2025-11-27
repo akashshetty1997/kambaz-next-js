@@ -9,7 +9,9 @@ import ModuleControlButtons from "./ModuleControlButtons";
 import { useParams } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import { setModules, editModule, updateModule } from "./reducer";
+import { setCurrentUser } from "../../../Account/reducer"; 
 import * as coursesClient from "../../client";
+import * as accountClient from "../../../Account/client"; 
 
 export default function Modules() {
   const { cid } = useParams();
@@ -20,14 +22,26 @@ export default function Modules() {
 
   const isFaculty = currentUser?.role === "FACULTY";
 
+  const fetchProfile = useCallback(async () => {
+    if (!currentUser) {
+      try {
+        const user = await accountClient.profile();
+        dispatch(setCurrentUser(user));
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      }
+    }
+  }, [currentUser, dispatch]);
+
   const fetchModules = useCallback(async () => {
     const modules = await coursesClient.findModulesForCourse(cid as string);
     dispatch(setModules(modules));
   }, [cid, dispatch]);
 
   useEffect(() => {
+    fetchProfile(); 
     fetchModules();
-  }, [fetchModules]);
+  }, [fetchProfile, fetchModules]);
 
   // Updated function to create module on server
   const onCreateModuleForCourse = async () => {
@@ -41,17 +55,18 @@ export default function Modules() {
     setModuleName("");
   };
 
-  // New function to delete module from server
   const onRemoveModule = async (moduleId: string) => {
-    await coursesClient.deleteModule(moduleId);
+    if (!cid || Array.isArray(cid)) return;
+    await coursesClient.deleteModule(cid, moduleId);
     dispatch(setModules(modules.filter((m: any) => m._id !== moduleId)));
   };
 
   // New function to update module on server
-  const onUpdateModule = async (moduleToUpdate: any) => {
-    await coursesClient.updateModule(moduleToUpdate);
+  const onUpdateModule = async (module: any) => {
+    if (!cid || Array.isArray(cid)) return;
+    await coursesClient.updateModule(cid, module);
     const newModules = modules.map((m: any) =>
-      m._id === moduleToUpdate._id ? moduleToUpdate : m
+      m._id === module._id ? module : m
     );
     dispatch(setModules(newModules));
   };

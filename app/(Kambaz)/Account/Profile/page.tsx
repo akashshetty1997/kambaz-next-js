@@ -15,6 +15,12 @@ export default function Profile() {
   const router = useRouter();
   const { currentUser } = useSelector((state: RootState) => state.accountReducer);
 
+  const formatDateForInput = (dateString: string) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    return date.toISOString().split('T')[0]; 
+  };
+
   const fetchProfile = useCallback(() => {
     if (!currentUser) {
       router.push("/Account/Signin");
@@ -23,7 +29,8 @@ export default function Profile() {
     setProfile(currentUser);
   }, [currentUser, router]);
 
-  const signout = () => {
+  const signout = async () => {
+    await client.signout();
     dispatch(setCurrentUser(null));
     router.push("/Account/Signin");
   };
@@ -80,7 +87,7 @@ export default function Profile() {
             id="wd-dob"
             className="mb-2"
             type="date"
-            value={profile.dob || ""}
+            value={formatDateForInput(profile.dob)} 
             onChange={(e) => setProfile({ ...profile, dob: e.target.value })}
           />
 
