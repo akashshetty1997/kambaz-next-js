@@ -24,6 +24,7 @@ export default function AssignmentEditor() {
   const dispatch = useDispatch();
 
   const isNew = aid === "new";
+  const isFaculty = currentUser?.role === "FACULTY";
 
   // Initial state matching your database structure
   const [assignment, setAssignment] = useState<any>({
@@ -54,12 +55,11 @@ export default function AssignmentEditor() {
   }, [currentUser, dispatch]);
 
   useEffect(() => {
-    fetchProfile(); // ✅ Fetch profile first
+    fetchProfile();
   }, [fetchProfile]);
 
   useEffect(() => {
     if (!isNew && cid && aid) {
-      // Fetch the assignment from server
       const fetchAssignment = async () => {
         try {
           const existingAssignment = await client.findAssignmentById(
@@ -80,10 +80,8 @@ export default function AssignmentEditor() {
   const handleSave = async () => {
     try {
       if (isNew) {
-        // Create new assignment on server
         await client.createAssignment(cid as string, assignment);
       } else {
-        // Update existing assignment on server
         await client.updateAssignment(cid as string, assignment);
       }
       router.push(`/Courses/${cid}/Assignments`);
@@ -93,25 +91,14 @@ export default function AssignmentEditor() {
     }
   };
 
-  // Only faculty can edit
-  if (currentUser?.role !== "FACULTY") {
-    return (
-      <div className="p-3">
-        <div className="alert alert-warning">
-          You don&apos;t have permission to edit assignments.
-        </div>
-        <Link
-          href={`/Courses/${cid}/Assignments`}
-          className="btn btn-secondary"
-        >
-          Back to Assignments
-        </Link>
-      </div>
-    );
-  }
-
   return (
     <div id="wd-assignments-editor" className="container p-3">
+      {!isFaculty && (
+        <div className="alert alert-info mb-3">
+          You are viewing this assignment in read-only mode.
+        </div>
+      )}
+
       <FormLabel htmlFor="wd-name">Assignment Name</FormLabel>
       <FormControl
         id="wd-name"
@@ -120,6 +107,7 @@ export default function AssignmentEditor() {
           setAssignment({ ...assignment, title: e.target.value })
         }
         className="mb-3"
+        disabled={!isFaculty} 
       />
 
       <FormLabel htmlFor="wd-description">Description</FormLabel>
@@ -132,6 +120,7 @@ export default function AssignmentEditor() {
         onChange={(e) =>
           setAssignment({ ...assignment, description: e.target.value })
         }
+        disabled={!isFaculty} // ✅ Disable for students
       />
 
       <Row className="mb-3">
@@ -149,6 +138,7 @@ export default function AssignmentEditor() {
                 points: parseInt(e.target.value) || 0,
               })
             }
+            disabled={!isFaculty} 
           />
         </Col>
       </Row>
@@ -164,6 +154,7 @@ export default function AssignmentEditor() {
             onChange={(e) =>
               setAssignment({ ...assignment, assignmentGroup: e.target.value })
             }
+            disabled={!isFaculty} // ✅ Disable for students
           >
             <option value="ASSIGNMENTS">ASSIGNMENTS</option>
             <option value="QUIZZES">QUIZZES</option>
@@ -184,6 +175,7 @@ export default function AssignmentEditor() {
             onChange={(e) =>
               setAssignment({ ...assignment, displayGradeAs: e.target.value })
             }
+            disabled={!isFaculty} // ✅ Disable for students
           >
             <option value="Percentage">Percentage</option>
             <option value="Points">Points</option>
@@ -205,6 +197,7 @@ export default function AssignmentEditor() {
               onChange={(e) =>
                 setAssignment({ ...assignment, submissionType: e.target.value })
               }
+              disabled={!isFaculty} // ✅ Disable for students
             >
               <option value="Online">Online</option>
               <option value="Paper">Paper</option>
@@ -212,26 +205,35 @@ export default function AssignmentEditor() {
             </FormSelect>
 
             <FormLabel className="d-block mb-2">Online Entry Options</FormLabel>
-            <Form.Check type="checkbox" label="Text Entry" id="wd-text-entry" />
+            <Form.Check 
+              type="checkbox" 
+              label="Text Entry" 
+              id="wd-text-entry" 
+              disabled={!isFaculty} // ✅ Disable for students
+            />
             <Form.Check
               type="checkbox"
               label="Website URL"
               id="wd-website-url"
+              disabled={!isFaculty} 
             />
             <Form.Check
               type="checkbox"
               label="Media Recordings"
               id="wd-media-recordings"
+              disabled={!isFaculty} 
             />
             <Form.Check
               type="checkbox"
               label="Student Annotation"
               id="wd-student-annotation"
+              disabled={!isFaculty} 
             />
             <Form.Check
               type="checkbox"
               label="File Uploads"
               id="wd-file-upload"
+              disabled={!isFaculty} 
             />
           </div>
         </Col>
@@ -251,6 +253,7 @@ export default function AssignmentEditor() {
                 setAssignment({ ...assignment, assignTo: e.target.value })
               }
               className="mb-3"
+              disabled={!isFaculty} 
             />
 
             <FormLabel htmlFor="wd-due-date">Due</FormLabel>
@@ -262,6 +265,7 @@ export default function AssignmentEditor() {
                 setAssignment({ ...assignment, dueDate: e.target.value })
               }
               className="mb-3"
+              disabled={!isFaculty}
             />
 
             <Row>
@@ -279,6 +283,7 @@ export default function AssignmentEditor() {
                       availableFrom: e.target.value,
                     })
                   }
+                  disabled={!isFaculty} 
                 />
               </Col>
               <Col md={6}>
@@ -293,6 +298,7 @@ export default function AssignmentEditor() {
                       availableUntil: e.target.value,
                     })
                   }
+                  disabled={!isFaculty} 
                 />
               </Col>
             </Row>
@@ -307,11 +313,13 @@ export default function AssignmentEditor() {
           href={`/Courses/${cid}/Assignments`}
           className="btn btn-secondary me-2"
         >
-          Cancel
+          {isFaculty ? "Cancel" : "Back"} 
         </Link>
-        <Button variant="danger" onClick={handleSave}>
-          Save
-        </Button>
+        {isFaculty && ( 
+          <Button variant="danger" onClick={handleSave}>
+            Save
+          </Button>
+        )}
       </div>
     </div>
   );
