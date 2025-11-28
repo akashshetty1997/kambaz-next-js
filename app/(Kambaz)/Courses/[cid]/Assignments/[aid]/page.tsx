@@ -24,23 +24,6 @@ export default function AssignmentEditor() {
   const isFaculty = currentUser?.role === "FACULTY";
   const canEdit = isFaculty;
 
-  // Block students from creating new assignments
-  if (isNew && !isFaculty) {
-    return (
-      <div className="p-3">
-        <div className="alert alert-warning">
-          You don&apos;t have permission to create assignments.
-        </div>
-        <Link
-          href={`/Courses/${cid}/Assignments`}
-          className="btn btn-secondary"
-        >
-          Back to Assignments
-        </Link>
-      </div>
-    );
-  }
-
   const [assignment, setAssignment] = useState<any>({
     _id: aid,
     title: "New Assignment",
@@ -91,6 +74,23 @@ export default function AssignmentEditor() {
       alert("Failed to save assignment");
     }
   };
+
+  // Block students from creating new assignments (moved AFTER hooks)
+  if (isNew && !isFaculty) {
+    return (
+      <div className="p-3">
+        <div className="alert alert-warning">
+          You don&apos;t have permission to create assignments.
+        </div>
+        <Link
+          href={`/Courses/${cid}/Assignments`}
+          className="btn btn-secondary"
+        >
+          Back to Assignments
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div id="wd-assignments-editor" className="container p-3">
