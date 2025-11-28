@@ -21,8 +21,26 @@ export default function AssignmentEditor() {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
 
   const isNew = aid === "new";
+  const isFaculty = currentUser?.role === "FACULTY";
+  const canEdit = isFaculty;
 
-  // Initial state matching your database structure
+  // Block students from creating new assignments
+  if (isNew && !isFaculty) {
+    return (
+      <div className="p-3">
+        <div className="alert alert-warning">
+          You don&apos;t have permission to create assignments.
+        </div>
+        <Link
+          href={`/Courses/${cid}/Assignments`}
+          className="btn btn-secondary"
+        >
+          Back to Assignments
+        </Link>
+      </div>
+    );
+  }
+
   const [assignment, setAssignment] = useState<any>({
     _id: aid,
     title: "New Assignment",
@@ -40,7 +58,6 @@ export default function AssignmentEditor() {
 
   useEffect(() => {
     if (!isNew) {
-      // Fetch the assignment from server
       const fetchAssignment = async () => {
         try {
           const assignments = await client.findAssignmentsForCourse(
@@ -61,12 +78,11 @@ export default function AssignmentEditor() {
   }, [aid, cid, isNew]);
 
   const handleSave = async () => {
+    if (!canEdit) return;
     try {
       if (isNew) {
-        // Create new assignment on server
         await client.createAssignment(cid as string, assignment);
       } else {
-        // Update existing assignment on server
         await client.updateAssignment(assignment);
       }
       router.push(`/Courses/${cid}/Assignments`);
@@ -76,25 +92,14 @@ export default function AssignmentEditor() {
     }
   };
 
-  // Only faculty can edit
-  if (currentUser?.role !== "FACULTY") {
-    return (
-      <div className="p-3">
-        <div className="alert alert-warning">
-          You don&apos;t have permission to edit assignments.
-        </div>
-        <Link
-          href={`/Courses/${cid}/Assignments`}
-          className="btn btn-secondary"
-        >
-          Back to Assignments
-        </Link>
-      </div>
-    );
-  }
-
   return (
     <div id="wd-assignments-editor" className="container p-3">
+      {!canEdit && (
+        <div className="alert alert-info mb-3">
+          You are viewing this assignment in read-only mode.
+        </div>
+      )}
+
       <FormLabel htmlFor="wd-name">Assignment Name</FormLabel>
       <FormControl
         id="wd-name"
@@ -103,6 +108,7 @@ export default function AssignmentEditor() {
           setAssignment({ ...assignment, title: e.target.value })
         }
         className="mb-3"
+        disabled={!canEdit}
       />
 
       <FormLabel htmlFor="wd-description">Description</FormLabel>
@@ -115,6 +121,7 @@ export default function AssignmentEditor() {
         onChange={(e) =>
           setAssignment({ ...assignment, description: e.target.value })
         }
+        disabled={!canEdit}
       />
 
       <Row className="mb-3">
@@ -132,6 +139,7 @@ export default function AssignmentEditor() {
                 points: parseInt(e.target.value) || 0,
               })
             }
+            disabled={!canEdit}
           />
         </Col>
       </Row>
@@ -147,6 +155,7 @@ export default function AssignmentEditor() {
             onChange={(e) =>
               setAssignment({ ...assignment, group: e.target.value })
             }
+            disabled={!canEdit}
           >
             <option value="ASSIGNMENTS">ASSIGNMENTS</option>
             <option value="QUIZZES">QUIZZES</option>
@@ -167,6 +176,7 @@ export default function AssignmentEditor() {
             onChange={(e) =>
               setAssignment({ ...assignment, displayGradeAs: e.target.value })
             }
+            disabled={!canEdit}
           >
             <option value="Percentage">Percentage</option>
             <option value="Points">Points</option>
@@ -188,6 +198,7 @@ export default function AssignmentEditor() {
               onChange={(e) =>
                 setAssignment({ ...assignment, submissionType: e.target.value })
               }
+              disabled={!canEdit}
             >
               <option value="Online">Online</option>
               <option value="Paper">Paper</option>
@@ -195,26 +206,35 @@ export default function AssignmentEditor() {
             </FormSelect>
 
             <FormLabel className="d-block mb-2">Online Entry Options</FormLabel>
-            <Form.Check type="checkbox" label="Text Entry" id="wd-text-entry" />
+            <Form.Check
+              type="checkbox"
+              label="Text Entry"
+              id="wd-text-entry"
+              disabled={!canEdit}
+            />
             <Form.Check
               type="checkbox"
               label="Website URL"
               id="wd-website-url"
+              disabled={!canEdit}
             />
             <Form.Check
               type="checkbox"
               label="Media Recordings"
               id="wd-media-recordings"
+              disabled={!canEdit}
             />
             <Form.Check
               type="checkbox"
               label="Student Annotation"
               id="wd-student-annotation"
+              disabled={!canEdit}
             />
             <Form.Check
               type="checkbox"
               label="File Uploads"
               id="wd-file-upload"
+              disabled={!canEdit}
             />
           </div>
         </Col>
@@ -234,6 +254,7 @@ export default function AssignmentEditor() {
                 setAssignment({ ...assignment, assignTo: e.target.value })
               }
               className="mb-3"
+              disabled={!canEdit}
             />
 
             <FormLabel htmlFor="wd-due-date">Due</FormLabel>
@@ -245,6 +266,7 @@ export default function AssignmentEditor() {
                 setAssignment({ ...assignment, dueDate: e.target.value })
               }
               className="mb-3"
+              disabled={!canEdit}
             />
 
             <Row>
@@ -262,6 +284,7 @@ export default function AssignmentEditor() {
                       availableDate: e.target.value,
                     })
                   }
+                  disabled={!canEdit}
                 />
               </Col>
               <Col md={6}>
@@ -276,6 +299,7 @@ export default function AssignmentEditor() {
                       availableUntil: e.target.value,
                     })
                   }
+                  disabled={!canEdit}
                 />
               </Col>
             </Row>
@@ -290,11 +314,13 @@ export default function AssignmentEditor() {
           href={`/Courses/${cid}/Assignments`}
           className="btn btn-secondary me-2"
         >
-          Cancel
+          {canEdit ? "Cancel" : "Back"}
         </Link>
-        <Button variant="danger" onClick={handleSave}>
-          Save
-        </Button>
+        {canEdit && (
+          <Button variant="danger" onClick={handleSave}>
+            Save
+          </Button>
+        )}
       </div>
     </div>
   );
