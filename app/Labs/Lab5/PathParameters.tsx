@@ -31,15 +31,16 @@ export default function PathParameters() {
         Add {a} + {b}
       </a>
       <a
-        className="btn btn-danger"
+        className="btn btn-danger me-2"
         id="wd-path-parameter-subtract"
         href={`${HTTP_SERVER}/lab5/subtract/${a}/${b}`}
       >
         Substract {a} - {b}
       </a>
-
+      <br />
+      <br />
       <a
-        className="btn btn-danger"
+        className="btn btn-success me-2"
         id="wd-path-parameter-multiply"
         href={`${HTTP_SERVER}/lab5/multiply/${a}/${b}`}
       >
@@ -47,7 +48,7 @@ export default function PathParameters() {
       </a>
 
       <a
-        className="btn btn-danger"
+        className="btn btn-warning"
         id="wd-path-parameter-divide"
         href={`${HTTP_SERVER}/lab5/divide/${a}/${b}`}
       >
